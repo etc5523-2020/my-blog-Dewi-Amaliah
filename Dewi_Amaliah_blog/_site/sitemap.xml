@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
-    <loc>https://beta.rstudioconnect.com/content/11424/about.html</loc>
+    <loc>https://datain.netlify.app/about.html</loc>
     <lastmod>2020-08-29T13:22:36+10:00</lastmod>
   </url>
   <url>
-    <loc>https://beta.rstudioconnect.com/content/11424/</loc>
+    <loc>https://datain.netlify.app/</loc>
     <lastmod>2020-08-29T14:41:24+10:00</lastmod>
   </url>
   <url>
-    <loc>https://beta.rstudioconnect.com/content/11424/posts/2020-08-29-building-website-with-distill-r/</loc>
+    <loc>https://datain.netlify.app/posts/2020-08-29-building-website-with-distill-r/</loc>
     <lastmod>2020-08-29T15:00:59+10:00</lastmod>
   </url>
 </urlset>

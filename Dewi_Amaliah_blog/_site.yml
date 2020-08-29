@@ -13,10 +13,10 @@ navbar:
       href: https://github.com/Dewi-Amaliah
     - icon : fab fa-twitter
       href: https://twitter.com/dlamaliah
-base_url: https://beta.rstudioconnect.com/content/11424/
+base_url: https://datain.netlify.app
 collections:
   posts:
-    disqus: Dewi_Amaliah_blog
+    disqus: datain
     share: [twitter, linkedin]
 output: 
   distill::distill_article:

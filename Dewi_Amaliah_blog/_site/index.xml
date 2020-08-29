@@ -2,21 +2,21 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
     <title>datain</title>
-    <link>https://beta.rstudioconnect.com/content/11424/</link>
-    <atom:link href="https://beta.rstudioconnect.com/content/11424/index.xml" rel="self" type="application/rss+xml"/>
+    <link>https://datain.netlify.app</link>
+    <atom:link href="https://datain.netlify.app/index.xml" rel="self" type="application/rss+xml"/>
     <description>datain
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Fri, 28 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2020 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Building Website with Distill Package in R</title>
       <dc:creator>Dewi Lestari Amaliah</dc:creator>
-      <link>https://beta.rstudioconnect.com/content/11424/posts/2020-08-29-building-website-with-distill-r</link>
+      <link>https://datain.netlify.app/posts/2020-08-29-building-website-with-distill-r</link>
       <description>I never thought before that creating a website would be this fun.</description>
       <category>Rmarkdown</category>
-      <guid>https://beta.rstudioconnect.com/content/11424/posts/2020-08-29-building-website-with-distill-r</guid>
-      <pubDate>Fri, 28 Aug 2020 00:00:00 +0000</pubDate>
-      <media:content url="https://beta.rstudioconnect.com/content/11424/posts/2020-08-29-building-website-with-distill-r/arnel-hasanovic-MNd-Rka1o0Q-unsplash.JPG" medium="image" type="image/jpeg"/>
+      <guid>https://datain.netlify.app/posts/2020-08-29-building-website-with-distill-r</guid>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://datain.netlify.app/posts/2020-08-29-building-website-with-distill-r/arnel-hasanovic-MNd-Rka1o0Q-unsplash.JPG" medium="image" type="image/jpeg"/>
     </item>
   </channel>
 </rss>
