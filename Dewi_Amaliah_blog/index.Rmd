@@ -1,8 +1,9 @@
 ---
-title: "datain"
+title: "datain: Telling stories with data"
 description: |
   Telling stories with data
 site: distill::distill_website
+listing: posts
 ---
 
 ```{r setup, include=FALSE}
