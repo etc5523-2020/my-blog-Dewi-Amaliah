@@ -1,5 +1,5 @@
 ---
-title: "datain: Telling stories with data"
+title: "Telling stories with data"
 description: |
   Telling stories with data
 site: distill::distill_website

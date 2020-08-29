@@ -1,7 +1,7 @@
 ---
 title: "Building Website with Distill Package in R"
 description: |
-  I never thought before that creating a website would be this easy
+  I never thought before that creating a website would be this fun.
 author:
   - name: Dewi Lestari Amaliah
 date: 08-29-2020
@@ -17,5 +17,5 @@ preview: arnel-hasanovic-MNd-Rka1o0Q-unsplash.JPG
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-
+Whenever I created a blog, I always ended up of not publishing it. 
 

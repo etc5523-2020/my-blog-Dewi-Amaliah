@@ -2,7 +2,7 @@
   {
     "path": "posts/2020-08-29-building-website-with-distill-r/",
     "title": "Building Website with Distill Package in R",
-    "description": "I never thought before that creating a website would be this easy",
+    "description": "I never thought before that creating a website would be this fun.",
     "author": [
       {
         "name": "Dewi Lestari Amaliah",
@@ -14,7 +14,7 @@
       "Rmarkdown"
     ],
     "preview": "posts/2020-08-29-building-website-with-distill-r/arnel-hasanovic-MNd-Rka1o0Q-unsplash.JPG",
-    "last_modified": "2020-08-29T14:34:49+10:00",
+    "last_modified": "2020-08-29T15:00:59+10:00",
     "input_file": "building-website-with-distill-r.utf8.md"
   }
 ]
