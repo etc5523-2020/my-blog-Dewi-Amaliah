@@ -8,7 +8,17 @@ description: |
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Hello! This is Dewi Amaliah, your data analyst-in-residence and a woman behind this blog.
+
+<center>
+
+```{r about-image, out.width="50%"}
+knitr::include_graphics(here::here("datain_about_image.JPG"))
+```
+
+</center>
+
+
+Hello! This is Dewi Amaliah, your data analyst-in-residence and the woman behind this blog.
 
 I am a data nerd currently studying as a graduate student of Master of Business Analytics, Department of Econometric and Business Statistics at Monash University. Prior to being a student, I was working in Statistics Indonesia.
 
