@@ -14,6 +14,6 @@ I am a data nerd currently studying as a graduate student of Master of Business 
 
 I created this blog as a space for learning and sharing knowledge and information related to data analytics. It is a place where I and my fellow data nerds can discuss the interesting phenomenon around us through data.  I mainly use R in R studio in wrangling, visualizing, modeling, and analyzing the data. I also used GitHub for the reproducibility of my analysis.
 
-I would love to talk with my fellow data nerds. Let me know how we can catch up by dropping me an email [here](dlamaleeah@gmail.com).
+I would love to talk with my fellow data nerds. Let me know how we can catch up by dropping me a DM in my twitter [here](https://twitter.com/dlamaliah).
 
 Until then, enjoy the blog!
