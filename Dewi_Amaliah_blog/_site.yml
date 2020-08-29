@@ -1,7 +1,7 @@
 name: "Dewi_Amaliah_blog"
-title: "dataIn"
+title: "datain"
 description: |
-  dataIn
+  datain
 output_dir: "_site"
 navbar:
   right:

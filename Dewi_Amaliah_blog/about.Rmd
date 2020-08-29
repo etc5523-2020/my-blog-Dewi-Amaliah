@@ -8,11 +8,11 @@ description: |
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Hello! This is Dewi Amaliah, your data analyst-in-residence.
+Hello! This is Dewi Amaliah, your data analyst-in-residence and a woman behind this blog.
 
 I am a data nerd currently studying as a graduate student of Master of Business Analytics, Department of Econometric and Business Statistics at Monash University. Prior to being a student, I was working in Statistics Indonesia.
 
-I created this blog as a space for learning and sharing knowledge and information related to data analytics. It is a place where I and my fellow data nerds can discuss the interesting phenomenon around us through data.
+I created this blog as a space for learning and sharing knowledge and information related to data analytics. It is a place where I and my fellow data nerds can discuss the interesting phenomenon around us through data.  I mainly use R in R studio in wrangling, visualizing, modeling, and analyzing the data. I also used GitHub for the reproducibility of my analysis.
 
 I would love to talk with my fellow data nerds. Let me know how we can catch up by dropping me an email [here](dlamaleeah@gmail.com).
 
