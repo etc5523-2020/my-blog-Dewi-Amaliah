@@ -13,7 +13,7 @@ navbar:
       href: https://github.com/Dewi-Amaliah
     - icon : fab fa-twitter
       href: https://twitter.com/dlamaliah
-base_url: https://datain.netlify.app
+base_url: https://datain360.com
 collections:
   posts:
     disqus: datain
