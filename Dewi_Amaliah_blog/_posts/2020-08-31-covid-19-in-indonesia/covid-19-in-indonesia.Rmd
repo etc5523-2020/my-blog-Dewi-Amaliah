@@ -13,7 +13,7 @@ output:
 categories:
   - COVID-19
   - Data Analysis
-draft: FALSE
+draft: TRUE
 ---
 
 ```{r setup, include=FALSE}
