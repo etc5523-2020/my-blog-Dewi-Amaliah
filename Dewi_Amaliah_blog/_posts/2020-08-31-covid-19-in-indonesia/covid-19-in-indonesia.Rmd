@@ -1,5 +1,5 @@
 ---
-title: "COVID-19 in Indonesia"
+title: "The Ugly Truth about Covid-19 Situation in Indonesia"
 description: |
   A short description of the post.
 author:
@@ -26,20 +26,8 @@ library(tidyverse)
 library(tidycovid19)
 library(timevis)
 library(DT)
+library(kableExtra)
 ```
-
-
-
-
-
-## Introduction and Motivation 
-
-
-- Highest fatality rate in South East Asia
-- Applying New Normal
-- Controversial statement from the authorities
-
-
 
 
 ```{css, echo = FALSE}
@@ -80,8 +68,19 @@ d-article table th, d-article table td {
 
 
 
+
+
+## Introduction 
+
+The statements from officials, experts, and leaders matters during an ongoing crisis, in this case, is Covid-19. It is because the messages that being told would determine people's expectation, fear, and reactions to the pandemic [@westman]. The problem is that not all the information regarding the crisis is true. The World Health Organization (WHO) even stated that the urgent measure to tackle the "coronavirus infodemic", the term for Covid-19 misinformation, should be taken immediately [@infodemic]. This infodemic would lead to public confusion about what information and which source to trust [@infodemic2].
+
+One of the examples of the communication problem was shown by the U.S. government. While the U.S. Center for Disease Control and Prevention (CDC) stated that the situation would change quickly and the future is still unknown, President Trump claimed a convincing timeline of vaccine development [@westman]. 
+
+Indonesia, the most populous country in South East Asia, also experiences a similar problem. Since the beginning of the emergence of Covid-19 in this country, the officials has made several controversial statements shown Figure \@ref(fig:statement-timeline). One of the reasons why these statements are considered controversial is because as per 28th August 2020, the country is reported has the highest death toll in the region, with 7.169 deaths, more than doubled the second place, Philippines, with 3.325 deaths [@csis]. In addition, it is feared that these positive statements will make the public less careful about the virus. Especially now that Indonesia has applied the "New Normal" policy that intended reopening of all the social and economic sectors’ followed with strict hygiene and health protocol [@newnormal].
+
+
 <center>
-```{r statement-timeline}
+```{r statement-timeline, fig.cap= "The timeline of controversial statement made by the government of Indonesia"}
 
 statement <- tribble(~id, ~content, ~start, ~end,
                 1, "COVID-19 virus is weaker in Indonesia due to relatively high temperature","2020-04-03", NA, 
@@ -99,12 +98,7 @@ timevis(statement, showZoom = FALSE, height = "350px", width = "800px")
 
 </center>
 
-
-
-
-
-- Fact checking those statement with data 
-
+Therefore, this article aims to do fact checking of these controversial claims using multiple data sources related to Covid-19. 
 
 
 
@@ -122,15 +116,42 @@ idn_data <- merged_data %>% filter(iso3c == "IDN") %>%
   filter(confirmed != 0)
 ```
 
+```{r}
+countries <- merged_data %>%
+  group_by(country) %>%
+  count()
+
+ncountries <- nrow(countries)
+```
+
+
+This article is utilized the compiled dataset from `tidycovid19` R package [@tidycovi19]. This package comprises of Covid-19 related data from various source at the country-day level. Initially, there are `r ncountries` countries covered in this dataset, but for this article purpose, I used only Indonesia data from the first case was recorded. Besides, to achieve the aim of this article, I mainly used the confirmed and fatality cases data, which are compiled from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu]; the lockdown measure data from ACAPS [@acaps]; and the testing data from Our World in Data [@testing]. 
+
+
+That being said, I also provided most of the variables in the compiled data in the package in Table \@ref(tab:idn-table). Note that I excluded the region variable (East Asia and Pacific), the income (upper middle income), and the time stamp variable (because it is the same with date variable) from the display.
+
+<br>
+
 ```{r idn-table}
 
-DT::datatable(idn_data, options = list(
+DT::datatable(idn_data, 
+              caption = "Indonesia's Covid-19 related data", 
+              options = list(
   pageLength=5, scrollX='400px'), filter = "top")
 
 ```
 
 
+<details><summary> The definition of each variable can be seen here. </summary>
 
+```{r}
+vd <- tidycovid19_variable_definitions
+
+kable(vd, col.names = c("Variable Name", "Source", "Definition"), caption = "Variable definition of Covid-19 dataset") %>% kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
+</details>
 
 
 ## Analysis and Findings
