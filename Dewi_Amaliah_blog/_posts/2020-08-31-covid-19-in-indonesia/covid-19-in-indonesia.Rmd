@@ -1,7 +1,7 @@
 ---
 title: "The Ugly Truth about Covid-19 Situation in Indonesia"
 description: |
-  A short description of the post.
+  This article aims to do a fact checking of some officials' controversial statements related to Covid-19 situation in Indonesia.
 author:
   - name: Dewi Lestari Amaliah
     url: {}
@@ -27,6 +27,7 @@ library(tidycovid19)
 library(timevis)
 library(DT)
 library(kableExtra)
+library(formattable)
 ```
 
 
@@ -87,7 +88,7 @@ statement <- tribble(~id, ~content, ~start, ~end,
                 2, "Infection rate has gone down, so the new normal scheme could be applied", "2020-06-03", NA, 
                 3, "The number of COVID-19 red zone has dropped", "2020-08-18", NA, 
                 4, "There will not be a second wave of COVID-19 outbreak in Indonesia", "2020-08-18", NA, 
-                5, "The COVID-19 infection rate has gone down and recovery rate has improved greatly to almot 66%", "2020-08-14", NA, 
+                5, "The COVID-19 infection rate has gone down and recovery rate has improved greatly to almost 66%", "2020-08-14", NA, 
                 6, "COVID-19 in Indonesia is now undercontrol", "2020-08-20", NA, 
                 )
 
@@ -125,7 +126,7 @@ ncountries <- nrow(countries)
 ```
 
 
-This article is utilized the compiled dataset from `tidycovid19` R package [@tidycovi19]. This package comprises of Covid-19 related data from various source at the country-day level. Initially, there are `r ncountries` countries covered in this dataset, but for this article purpose, I used only Indonesia data from the first case was recorded. Besides, to achieve the aim of this article, I mainly used the confirmed and fatality cases data, which are compiled from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu]; the lockdown measure data from ACAPS [@acaps]; and the testing data from Our World in Data [@testing]. 
+This article is utilized the compiled dataset from `tidycovid19` R package [@tidycovi19]. This package comprises of Covid-19 related data from various source at the country-day level. Initially, there are `r ncountries` countries covered in this dataset, but for this article purpose, I used only Indonesia data start from the first case was recorded. Besides, to achieve the aim of this article, I mainly used the confirmed, fatality, and recovered cases data, which are compiled from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu]; the lockdown measure data from ACAPS [@acaps]; the testing data from Our World in Data [@testing]; and the population data from the World Bank [@population]. 
 
 
 That being said, I also provided most of the variables in the compiled data in the package in Table \@ref(tab:idn-table). Note that I excluded the region variable (East Asia and Pacific), the income (upper middle income), and the time stamp variable (because it is the same with date variable) from the display.
@@ -155,6 +156,78 @@ kable(vd, col.names = c("Variable Name", "Source", "Definition"), caption = "Var
 
 
 ## Analysis and Findings
+
+The analysis is performed mainly using the functions in `tidyverse` [@tidyverse] package in R [@r]. I also used `DT` [@DT], `kableExtra` [@kableExtra], `timevis` [@timevis], and `formattable` [@formattable] packages. Since the package only provides cumulative cases, death, recovered, and tests, I wrangled the dataset to obtain daily cases and daily death. I also mutated new variables, namely infection rate, positive rate, and test rate. I would not check all of the statements in Figure \@ref(fig:statement-timeline). I would only check the statements that could be answered using this dataset one by one.
+
+
+```{r daily}
+idn_data_new <- idn_data %>% select(iso3c, country, date, confirmed, deaths, recovered, total_tests, population, pop_density, lockdown) %>% 
+  mutate(lag_confirmed = lag(confirmed, 1),
+         lag_deaths = lag(deaths, 1),
+         lag_recovered = lag(recovered, 1),
+         lag_test = lag(total_tests, 1),
+         daily_confirmed = case_when(date == "2020-03-02" ~ confirmed,
+                                     date > "2020-03-02" ~ confirmed - lag_confirmed),
+         daily_deaths = case_when(date == "2020-03-11" ~ deaths,
+                                     date > "2020-03-11" ~ deaths - lag_deaths,
+                                  date < "2020-03-11" ~ deaths),
+         daily_recovered = case_when(date == "2020-03-10" ~ recovered,
+                                     date > "2020-03-10" ~ recovered - lag_recovered,
+                                     date < "2020-03-10" ~ recovered),
+         daily_tests = case_when(date == "2020-03-16" ~ total_tests,
+                                 date > "2020-03-16" ~ total_tests - lag_test),
+         infection_rate = daily_confirmed / population * 100,
+         positive_rate = daily_confirmed / daily_tests * 100,
+         recovery_rate = daily_recovered / daily_confirmed * 100, 
+         death_rate = daily_deaths/ daily_confirmed * 100,
+         test_rate = daily_tests / population)
+
+```
+
+
+**Statement 1: Infection rate has gone down, so the new normal scheme could be applied**
+
+This claim was stated by the Minister of 
+
+**Fact 1**
+
+```{r}
+ggplot(idn_data_new) +
+  geom_line(aes(x = date,
+                y = infection_rate)) +
+  stat_smooth(aes(x = date,
+                  y = infection_rate),color = "blue",
+             method = "loess",
+             se = FALSE) +
+  theme_bw()
+  
+```
+
+
+
+
+
+
+
+**Statement 2: The COVID-19 infection rate has gone down and recovery rate has improved greatly to almost 66%**
+
+
+```{r}
+
+Aug14 <- idn_data_new %>% filter(date == "2020-08-14")
+Aug13 <- idn_data_new %>% filter(date == "2020-08-13")
+Mar10 <- idn_data_new %>% filter(date == "2020-03-10")
+
+
+recov_delta1 <- (Aug14$recovery_rate - Aug13$recovery_rate)/ Aug13$recovery_rate * 100
+recov_delta2 <- (Aug14$recovery_rate - Mar10$recovery_rate)/ Mar10$recovery_rate * 100
+
+
+```
+
+
+**Statement 3: There will not be a second wave of COVID-19 outbreak in Indonesia**
+
 
 ## Conclusion
 
