@@ -1,0 +1,124 @@
+---
+title: "COVID-19 in Indonesia"
+description: |
+  A short description of the post.
+author:
+  - name: Dewi Lestari Amaliah
+    url: {}
+date: 08-31-2020
+bibliography: references.bib
+output:
+  distill::distill_article:
+    self_contained: false
+categories:
+  - COVID-19
+  - Data Analysis
+draft: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+# Install the tidycovid19 package first if its have not been installed.
+#devtools::install_github("joachim-gassen/tidycovid19")
+
+library(tidyverse)
+library(tidycovid19)
+library(timevis)
+
+```
+
+
+
+
+
+## Introduction and Motivation 
+
+
+- Highest fatality rate in South East Asia
+- Applying New Normal
+- Controversial statement from the authorities
+
+
+
+```{css, echo = FALSE}
+.vis-item {
+  background-color: #A3E4D7 ;
+}
+
+
+html, body, p {
+  
+  font-family: 'Lato', sans-serif;
+  font-weight: 350;
+  line-height: 1.3; 
+  font-size: 14px;
+  color: black;
+  font-style: normal;
+  
+}
+```
+
+```{r statement-timeline}
+
+statement <- tribble(~id, ~content, ~start, ~end,
+                1, "COVID-19 virus is weaker in Indonesia due to relatively high temperature","2020-04-03", NA, 
+                2, "Infection rate has gone down, so the new normal scheme could be applied", "2020-06-03", NA, 
+                3, "The number of COVID-19 red zone has dropped", "2020-08-18", NA, 
+                4, "There will not be a second wave of COVID-19 outbreak in Indonesia", "2020-08-18", NA, 
+                5, "The COVID-19 infection rate has gone down and recovery rate has improved greatly to almot 66%", "2020-08-14", NA, 
+                6, "COVID-19 in Indonesia is now undercontrol", "2020-08-20", NA, 
+                )
+
+timevis(statement, showZoom = FALSE, height = "350px", width = "800px")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Fact checking those statement with data 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+# download data for all countries available in the package and all of the compiled data
+merged_data <- download_merged_data(cached = TRUE, silent = TRUE)
+
+# filter the data only for Indonesia 
+idn_data <- merged_data %>% filter(iso3c == "IDN")
+```
+
+## Data Description
+
+
+
+
+## Analysis and Findings
+
+## Conclusion
+
