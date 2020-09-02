@@ -28,6 +28,7 @@ library(timevis)
 library(DT)
 library(kableExtra)
 library(formattable)
+library(plotly)
 ```
 
 
@@ -77,19 +78,21 @@ The statements from officials, experts, and leaders matters during an ongoing cr
 
 One of the examples of the communication problem was shown by the U.S. government. While the U.S. Center for Disease Control and Prevention (CDC) stated that the situation would change quickly and the future is still unknown, President Trump claimed a convincing timeline of vaccine development [@westman]. 
 
-Indonesia, the most populous country in South East Asia, also experiences a similar problem. Since the beginning of the emergence of Covid-19 in this country, the officials has made several controversial statements shown Figure \@ref(fig:statement-timeline). One of the reasons why these statements are considered controversial is because as per 28th August 2020, the country is reported has the highest death toll in the region, with 7.169 deaths, more than doubled the second place, Philippines, with 3.325 deaths [@csis]. In addition, it is feared that these positive statements will make the public less careful about the virus. Especially now that Indonesia has applied the "New Normal" policy that intended reopening of all the social and economic sectors’ followed with strict hygiene and health protocol [@newnormal].
+Indonesia, the most populous country in South East Asia, also experiences a similar problem. Since the beginning of the emergence of Covid-19 in this country, the officials has made several controversial statements shown Figure \@ref(fig:statement-timeline). One of the reasons why these statements are considered controversial is because as per 28th August 2020, the country is reported has the highest death toll in the region, with 7.169 deaths, more than doubled the second place, Philippines, with 3.325 deaths [@csis]. In addition, it is feared that these positive statements will make the public less careful about the virus. Especially now that Indonesia has applied the "New Normal" policy that intended reopening of all the social and economic sectors’ followed with strict hygiene and health protocol [@newnormal]. 
+
+Therefore, this article aims to do fact checking of these controversial claims using multiple data sources related to Covid-19. 
 
 
 <center>
 ```{r statement-timeline, fig.cap= "The timeline of controversial statement made by the government of Indonesia"}
 
 statement <- tribble(~id, ~content, ~start, ~end,
-                1, "COVID-19 virus is weaker in Indonesia due to relatively high temperature","2020-04-03", NA, 
-                2, "Infection rate has gone down, so the new normal scheme could be applied", "2020-06-03", NA, 
-                3, "The number of COVID-19 red zone has dropped", "2020-08-18", NA, 
-                4, "There will not be a second wave of COVID-19 outbreak in Indonesia", "2020-08-18", NA, 
-                5, "The COVID-19 infection rate has gone down and recovery rate has improved greatly to almost 66%", "2020-08-14", NA, 
-                6, "COVID-19 in Indonesia is now undercontrol", "2020-08-20", NA, 
+                1, "Covid-19 virus is weaker in Indonesia due to relatively high temperature","2020-04-03", NA, 
+                2, "Covid-19 spread has gone down, so the new normal scheme could be applied", "2020-06-02", NA, 
+                3, "The number of Covid-19 red zone has dropped", "2020-08-18", NA, 
+                4, "There will not be a second wave of Covid-19 outbreak in Indonesia", "2020-08-18", NA, 
+                5, "The Covid-19 infection rate has gone down and recovery rate has improved greatly to almost 66%", "2020-08-14", NA, 
+                6, "Covid-19 in Indonesia is now undercontrol", "2020-08-20", NA, 
                 )
 
 timevis(statement, showZoom = FALSE, height = "350px", width = "800px")
@@ -99,7 +102,6 @@ timevis(statement, showZoom = FALSE, height = "350px", width = "800px")
 
 </center>
 
-Therefore, this article aims to do fact checking of these controversial claims using multiple data sources related to Covid-19. 
 
 
 
@@ -157,7 +159,14 @@ kable(vd, col.names = c("Variable Name", "Source", "Definition"), caption = "Var
 
 ## Analysis and Findings
 
-The analysis is performed mainly using the functions in `tidyverse` [@tidyverse] package in R [@r]. I also used `DT` [@DT], `kableExtra` [@kableExtra], `timevis` [@timevis], and `formattable` [@formattable] packages. Since the package only provides cumulative cases, death, recovered, and tests, I wrangled the dataset to obtain daily cases and daily death. I also mutated new variables, namely infection rate, positive rate, and test rate. I would not check all of the statements in Figure \@ref(fig:statement-timeline). I would only check the statements that could be answered using this dataset one by one.
+The analysis is performed mainly using the functions in `tidyverse` [@tidyverse] package in R [@r]. I also used `DT` [@DT], `kableExtra` [@kableExtra], `timevis` [@timevis], `plotly` [@plotly], and `formattable` [@formattable] packages. Since `tidycovid19` only provides cumulative cases, death, recovered, and tests, I wrangled the dataset to obtain the daily number. I also mutated new variables, namely infection rate, positive rate, death rate, recovery rate, and testing rate. The definition of those variables is as follows:
+
+- Infection rate: According to @infectionrate, there are three ways of calculating the infection rate. The formula I used here is the number of infected people divided by the total population multiplied by the constant variable, which is 1.000.000 people. 
+- Positive rate: It is the fraction of tests that have a positive result. The calculation is the number of confirmed cases divided by the number of tests (percentage) at daily level [@positiverate].
+- Death rate: The percentage of infected people who died at a daily level. 
+- Recovery rate: The percentage of infected people who recover at a daily level.
+- Testing Rate : The number of test per 1.000.000 population. 
+
 
 
 ```{r daily}
@@ -176,7 +185,7 @@ idn_data_new <- idn_data %>% select(iso3c, country, date, confirmed, deaths, rec
                                      date < "2020-03-10" ~ recovered),
          daily_tests = case_when(date == "2020-03-16" ~ total_tests,
                                  date > "2020-03-16" ~ total_tests - lag_test),
-         infection_rate = daily_confirmed / population * 100,
+         infection_rate = daily_confirmed / population * 1000000,
          positive_rate = daily_confirmed / daily_tests * 100,
          recovery_rate = daily_recovered / daily_confirmed * 100, 
          death_rate = daily_deaths/ daily_confirmed * 100,
@@ -185,27 +194,84 @@ idn_data_new <- idn_data %>% select(iso3c, country, date, confirmed, deaths, rec
 ```
 
 
-**Statement 1: Infection rate has gone down, so the new normal scheme could be applied**
+I would not check all of the statements in Figure \@ref(fig:statement-timeline). I would only check the statements that could be answered using this dataset one by one.
 
-This claim was stated by the Minister of 
+<br>
 
-**Fact 1**
+> **Statement 1: Covid-19 spread has gone down, so the new normal scheme could be applied**
+
+This claim was stated by the Coordinating Minister of Maritime and Investment, Luhut Binsar Pandjaitan, on June, 2nd 2020. He claimed that the decision to reopen the economy and ease the mobility restriction, which is called "New Normal", is based on data that the spread of the virus has declined and the number of new cases has gone down to 600 cases per day on average [@detik].  
+
+**The Fact**
+
+There are two main points that I would check in this statement. First, is the declining of the average of new cases per day and the second is the declining of the virus spread. 
+
 
 ```{r}
-ggplot(idn_data_new) +
-  geom_line(aes(x = date,
-                y = infection_rate)) +
-  stat_smooth(aes(x = date,
-                  y = infection_rate),color = "blue",
-             method = "loess",
-             se = FALSE) +
-  theme_bw()
-  
+June2 <- idn_data_new %>% filter(date == "2020-06-02")
 ```
 
+The number of daily case shown in Figure \@ref(fig:ir-cases-plot) suggests that it was true that the number of cases as of June, 2 2020 was `r June2$daily_confirmed`, as claimed. Previous days, the number of cases was also in the range of 600s. However, we could not really say that the cases was declining as until this statement was made, June 2 2020, the trend was positive. 
+
+Regarding the spreading of the virus, the Minister did not say its definition. Thus, I would assume that it is the infection rate, since the spread is supposed to be regarding the number of people who are likely to get infected by the virus. The infection rate shown in Figure \@ref(fig:ir-cases-plot) suggests that the spread of the virus was not really declining. It was true that the infection rate had decreased at the end of May, compared to the third week of May, but again, the trend line shows that the spread of the virus was still increasing. 
+
+The government, should have seen the bigger picture, instead of the spike shown in only a short time period. Hence, we could argue that this claim is busted. 
 
 
+```{r data-for-plot}
+plot_dat <- idn_data_new %>% filter(date <= "2020-06-02") 
 
+plot_dat <- plot_dat %>% 
+  mutate(index = seq(1: nrow(plot_dat)))
+
+loess_ir <- loess(infection_rate ~ index, data = plot_dat)
+loess_case <- loess(daily_confirmed ~ index, data = plot_dat)
+
+smoothed_ir <- predict(loess_ir)
+smoothed_case <- predict(loess_case)
+
+plot_dat <- cbind(plot_dat, smoothed_ir, smoothed_case)
+
+```
+
+<center>
+
+```{r ir-cases-plot, fig.cap = "Daily confirmed cases and infection rate of Covid-19 in Indonesia from 2020-03-2 until 2020-06-02"}
+
+fig1 <- plot_ly(plot_dat, 
+                x = ~date, 
+                y = ~infection_rate, 
+                name = 'Infection rate per 1.000.000 people', 
+                type = 'scatter', 
+                mode = 'lines', 
+                line = list(color = '#F18BA2')) 
+fig1 <- fig1 %>% add_trace(y = ~smoothed_ir, 
+                           name = 'Trend of infection rate (loess method)', 
+                           mode = 'lines',
+                           line = list(color = "#AE5F7E"))
+  
+
+fig2 <- plot_ly(plot_dat, 
+                x = ~date, 
+                y = ~daily_confirmed, 
+                name = 'Number of confirmed cases', 
+                type = 'scatter',
+                mode = 'lines',
+                line = list(color = "#60B0DD")) 
+fig2 <- fig2 %>% add_trace(y = ~smoothed_case, 
+                           name = 'Trend of confirmed cases (loess method)',
+                           mode = 'lines',
+                           line = list(color = "#21618C")) 
+
+fig <- subplot(fig2, fig1) %>%
+  layout(legend = list(orientation = "h",
+                       x = 0.05, y = -0.1))
+
+fig
+
+```
+
+</center>
 
 
 
@@ -227,6 +293,9 @@ recov_delta2 <- (Aug14$recovery_rate - Mar10$recovery_rate)/ Mar10$recovery_rate
 
 
 **Statement 3: There will not be a second wave of COVID-19 outbreak in Indonesia**
+
+**Statement 4: COVID-19 in Indonesia is now under control**
+
 
 
 ## Conclusion
