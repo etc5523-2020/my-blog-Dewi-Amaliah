@@ -29,6 +29,9 @@ library(DT)
 library(kableExtra)
 library(formattable)
 library(plotly)
+library(data.table)
+library(gridExtra)
+library(lubridate)
 ```
 
 
@@ -74,7 +77,7 @@ d-article table th, d-article table td {
 
 ## Introduction 
 
-The statements from officials, experts, and leaders matters during an ongoing crisis, in this case, is Covid-19. It is because the messages that being told would determine people's expectation, fear, and reactions to the pandemic [@westman]. The problem is that not all the information regarding the crisis is true. The World Health Organization (WHO) even stated that the urgent measure to tackle the "coronavirus infodemic", the term for Covid-19 misinformation, should be taken immediately [@infodemic]. This infodemic would lead to public confusion about what information and which source to trust [@infodemic2].
+The statements from officials, experts, and leaders matter during an ongoing crisis, in this case, is Covid-19. It is because the messages that being told would determine people's expectation, fear, and reactions to the pandemic [@westman]. The problem is that not all the information regarding the crisis is true. The World Health Organization (WHO) even stated that the urgent measure to tackle the "coronavirus infodemic", the term for Covid-19 misinformation, should be taken immediately [@infodemic]. This infodemic would lead to public confusion about what information and which source to trust [@infodemic2].
 
 One of the examples of the communication problem was shown by the U.S. government. While the U.S. Center for Disease Control and Prevention (CDC) stated that the situation would change quickly and the future is still unknown, President Trump claimed a convincing timeline of vaccine development [@westman]. 
 
@@ -91,7 +94,7 @@ statement <- tribble(~id, ~content, ~start, ~end,
                 2, "Covid-19 spread has gone down, so the new normal scheme could be applied", "2020-06-02", NA, 
                 3, "The number of Covid-19 red zone has dropped", "2020-08-18", NA, 
                 4, "There will not be a second wave of Covid-19 outbreak in Indonesia", "2020-08-18", NA, 
-                5, "The Covid-19 infection rate has gone down and recovery rate has improved greatly to almost 66%", "2020-08-14", NA, 
+                5, "The Covid-19 positive rate has gone down and recovery rate has improved greatly to almost 66%", "2020-08-14", NA, 
                 6, "Covid-19 in Indonesia is now undercontrol", "2020-08-20", NA, 
                 )
 
@@ -157,16 +160,20 @@ kable(vd, col.names = c("Variable Name", "Source", "Definition"), caption = "Var
 </details>
 
 
+
 ## Analysis and Findings
 
-The analysis is performed mainly using the functions in `tidyverse` [@tidyverse] package in R [@r]. I also used `DT` [@DT], `kableExtra` [@kableExtra], `timevis` [@timevis], `plotly` [@plotly], and `formattable` [@formattable] packages. Since `tidycovid19` only provides cumulative cases, death, recovered, and tests, I wrangled the dataset to obtain the daily number. I also mutated new variables, namely infection rate, positive rate, death rate, recovery rate, and testing rate. The definition of those variables is as follows:
+The analysis is performed mainly using the functions in `tidyverse` [@tidyverse] package in R [@r]. I also used `DT` [@DT], `kableExtra` [@kableExtra], `timevis` [@timevis], `plotly` [@plotly], `gridExtra` [@gridExtra], and `formattable` [@formattable] packages. Since `tidycovid19` only provides cumulative cases, death, recovered, and tests, I wrangled the dataset to obtain the daily number. I also mutated new variables, namely infection rate, positive rate, and testing rate. The definition of those variables is as follows:
 
-- Infection rate: According to @infectionrate, there are three ways of calculating the infection rate. The formula I used here is the number of infected people divided by the total population multiplied by the constant variable, which is 1.000.000 people. 
-- Positive rate: It is the fraction of tests that have a positive result. The calculation is the number of confirmed cases divided by the number of tests (percentage) at daily level [@positiverate].
-- Death rate: The percentage of infected people who died at a daily level. 
-- Recovery rate: The percentage of infected people who recover at a daily level.
-- Testing Rate : The number of test per 1.000.000 population. 
+- Infection rate: According to @infectionrate, there are three ways of calculating the infection rate. The formula I used here is the number of infected people divided by the total population multiplied by the constant variable, which is 1,000,000 people, this figure is calculated in a daily level. 
+- Positive rate: It is the fraction of tests that have a positive result. The calculation is the number of cumulative confirmed cases divided by the total tests (percentage) [@positiverate].
+- Testing Rate : The number of test per 1,000,000 population at daily level. 
 
+<br>
+
+**Limitation**
+
+Since the results of the Covid-19 test in Indonesia were not released on the same day, there should be a lag between the number of cases and the number of tests used to calculate the positive rate. However, the length of lag between the test time and the results varies between test locations, making it difficult to determine the right lag. Therefore, in the calculation, the positive rate is based on the cumulative number. 
 
 
 ```{r daily}
@@ -186,21 +193,19 @@ idn_data_new <- idn_data %>% select(iso3c, country, date, confirmed, deaths, rec
          daily_tests = case_when(date == "2020-03-16" ~ total_tests,
                                  date > "2020-03-16" ~ total_tests - lag_test),
          infection_rate = daily_confirmed / population * 1000000,
-         positive_rate = daily_confirmed / daily_tests * 100,
-         recovery_rate = daily_recovered / daily_confirmed * 100, 
-         death_rate = daily_deaths/ daily_confirmed * 100,
-         test_rate = daily_tests / population)
+         positive_rate = confirmed / total_tests * 100,
+         test_rate = daily_tests / population *1000000)
 
 ```
 
 
-I would not check all of the statements in Figure \@ref(fig:statement-timeline). I would only check the statements that could be answered using this dataset one by one.
+In addition, I would not check all of the statements in Figure \@ref(fig:statement-timeline). I would only check the statements that could be answered using this dataset one by one.
 
 <br>
 
-> **Statement 1: Covid-19 spread has gone down, so the new normal scheme could be applied**
+> **Statement 1: Covid-19 spread has gone down, so the new normal scheme could be applied.**
 
-This claim was stated by the Coordinating Minister of Maritime and Investment, Luhut Binsar Pandjaitan, on June, 2nd 2020. He claimed that the decision to reopen the economy and ease the mobility restriction, which is called "New Normal", is based on data that the spread of the virus has declined and the number of new cases has gone down to 600 cases per day on average [@detik].  
+This claim was stated by the Coordinating Minister of Maritime and Investment, Luhut Binsar Pandjaitan, on June, 2nd 2020. He claimed that the decision to reopen the economy and ease the mobility restriction, which is called the "New Normal", is based on data that the spread of the virus has declined and the number of new cases has gone down to 600 cases per day on average [@detik].  
 
 **The Fact**
 
@@ -213,7 +218,7 @@ June2 <- idn_data_new %>% filter(date == "2020-06-02")
 
 The number of daily case shown in Figure \@ref(fig:ir-cases-plot) suggests that it was true that the number of cases as of June, 2 2020 was `r June2$daily_confirmed`, as claimed. Previous days, the number of cases was also in the range of 600s. However, we could not really say that the cases was declining as until this statement was made, June 2 2020, the trend was positive. 
 
-Regarding the spreading of the virus, the Minister did not say its definition. Thus, I would assume that it is the infection rate, since the spread is supposed to be regarding the number of people who are likely to get infected by the virus. The infection rate shown in Figure \@ref(fig:ir-cases-plot) suggests that the spread of the virus was not really declining. It was true that the infection rate had decreased at the end of May, compared to the third week of May, but again, the trend line shows that the spread of the virus was still increasing. 
+Regarding the spreading of the virus, the Minister did not say its definition. Thus, I would assume that it is the infection rate, since the spread is supposed to be regarding the number of people who are likely to get infected by the virus. The infection rate shown in Figure \@ref(fig:ir-cases-plot) suggests that the spread of the virus was not declining. It was true that the infection rate had decreased at the end of May, compared to the third week of May, but again, the trend line shows that the spread of the virus was still increasing. 
 
 The government, should have seen the bigger picture, instead of the spike shown in only a short time period. Hence, we could argue that this claim is busted. 
 
@@ -241,7 +246,7 @@ plot_dat <- cbind(plot_dat, smoothed_ir, smoothed_case)
 fig1 <- plot_ly(plot_dat, 
                 x = ~date, 
                 y = ~infection_rate, 
-                name = 'Infection rate per 1.000.000 people', 
+                name = 'Infection rate per 1,000,000 people', 
                 type = 'scatter', 
                 mode = 'lines', 
                 line = list(color = '#F18BA2')) 
@@ -275,8 +280,164 @@ fig
 
 
 
-**Statement 2: The COVID-19 infection rate has gone down and recovery rate has improved greatly to almost 66%**
+```{r}
+# create new variable: the goverment policy, to see the change the before and after new normal
+idn_data_new <- idn_data_new %>% mutate(govt_policy = case_when(date <= "2020-06-04" ~ "Before New Normal",
+                                                                date > "2020-06-04" ~ "After New Normal"))
+```
 
+
+Despite this positive trend, Indonesian government has applied the "New Normal" scheme started from 5th June 2020 [@newnormalstarted]. Therefore, I was curious about how the statistics changed after this scheme put in.
+I used median value as the summary statistics because the distribution of the indicators, which are the daily cases, daily fatality, daily recovered, daily testing, infection rate, and testing rate, are mostly skewed, especially before "New Normal" phase. According The Australian Bureau of Statistics (ABS) [@abs], the median is more robust to skewed data and is sometimes the favorable measure of central tendency when the distribution is asymmetric. 
+
+<details><summary> Expand here to see the distribution.</summary>
+
+```{r geom-density, fig.height = 15, fig.width = 9}
+p1 <- ggplot(idn_data_new) +
+  geom_density(aes(x = daily_confirmed, fill = govt_policy), alpha = 0.3) +
+  facet_wrap(~govt_policy) +
+  ggtitle("Daily confirmed cases")
+
+p2 <- ggplot(idn_data_new) +
+  geom_density(aes(x = daily_deaths, fill = govt_policy), alpha = 0.3) +
+  facet_wrap(~govt_policy) +
+  ggtitle("Daily fatality")
+
+p3 <- ggplot(idn_data_new) +
+  geom_density(aes(x = daily_recovered, fill = govt_policy), alpha = 0.3) +
+  facet_wrap(~govt_policy) +
+  ggtitle("Daily recovered cases")
+
+p4 <- ggplot(idn_data_new) +
+  geom_density(aes(x = daily_tests, fill = govt_policy), alpha = 0.3) +
+  facet_wrap(~govt_policy) +
+  ggtitle("Daily number of peope tested")
+
+p5 <- ggplot(idn_data_new) +
+  geom_density(aes(x = infection_rate, fill = govt_policy), alpha = 0.3) +
+  facet_wrap(~govt_policy) +
+  ggtitle("Daily infection rate")
+
+p6 <- ggplot(idn_data_new) +
+  geom_density(aes(x = test_rate, fill = govt_policy), alpha = 0.3) +
+  facet_wrap(~govt_policy) +
+  ggtitle("Daily testing rate")
+
+p7 <- ggplot(idn_data_new) +
+  geom_density(aes(x = positive_rate, fill = govt_policy), alpha = 0.3) +
+  facet_wrap(~govt_policy) +
+  ggtitle("Cumulative positive rate")
+
+
+grid.arrange(p1, p2, p3, p4, p5, p6, p7, ncol= 1)
+
+
+```
+
+
+</details>
+
+
+
+```{r indicator-median}
+
+
+# create the summary table of median 
+summary_table <- idn_data_new %>%
+  group_by(govt_policy) %>%
+  summarise(`Median of daily confirmed cases` = round(median(daily_confirmed, na.rm = TRUE), 3), 
+            `Median of daily fatality` = round(median(daily_deaths, na.rm = TRUE), 3),
+            `Median of daily recovered` = round(median(daily_recovered, na.rm = TRUE), 3),
+            `Median of daily people tested` = round(median(daily_tests, na.rm = TRUE), 3),
+            `Median of daily infection rate` = round(median(infection_rate, na.rm = TRUE), 3),
+            `Median of daily testing rate` = round(median(test_rate, na.rm = TRUE), 3),
+            `Median of cumulative positive rate` = round(median(positive_rate, na.rm = TRUE), 3)) 
+ 
+summary_table_pivot_longer <- summary_table %>% pivot_longer(c(2:8), 
+                                                             names_to = "Indicator", 
+                                                             values_to = "Values")
+
+summary_table_pivot_wider <- summary_table_pivot_longer %>% 
+  pivot_wider(names_from = "govt_policy", 
+              values_from = "Values")
+
+# change the order of the column in rename the column
+
+col_order <- c("Indicator", "Before New Normal", "After New Normal")
+
+summary_table_new <-  summary_table_pivot_wider[, col_order]
+
+```
+<br>
+
+All indicators in Table 2. show an increase after the "New Normal" policy was implemented. If we look at the number of confirmed cases and the infection rate, we will conclude that after the "New Normal", there has been a drastic increase in Covid-19 cases in Indonesia by about five times. Likewise with the death toll and recovery cases, the number was increasing because the number of cases was increasing.
+
+In fact, this does not necessarily explain the true condition because the number of cases is greatly influenced by the number of people tested. If we look at the number of people tested, there was an increase after the New Normal period, even though the rate is only 43 people per 1,000,000 population per day. Hence, increasing cases makes sense.
+
+Furthermore, if we look at a positive rate, we can see that looking at the number of positive cases only is not enough. In fact, there was a decrease in positive rates after the "New Normal". However, bear in mind that the positive rate here is cumulative figure. In addition, speaking of positive rate and "New Normal", the WHO recommended that the positive rate from a comprehensive testing program should be at or below 5% for at least 14 days to ease the restriction and resume the economic and social activity.[@positiverate] How about Indonesia? Figure \@ref(fig:positiverate-plot) shows the answer that Indonesia did not follow the WHO reccommendation because the positive rate was still above 10 percent when the "New Normal" began. 
+
+<br>
+
+Table 2. Covid-19 indicators before and after 'New Normal' policy in Indonesia
+
+```{r sum-table, fig.cap= "Covid-19 indicators before and after 'New Normal' policy in Indonesia (Daily figure)"}
+
+# edit the display of the table
+
+
+formattable(summary_table_new, align =c("l","r","r"), list(
+  `Indicator` = formatter("span",
+                               style = ~ formattable::style(color = "black")), 
+  `After New Normal`= formatter("span", style = ~ formattable::style(color = ifelse(`After New Normal` >`Before New Normal`, "#B14555", "steelblue")),
+                    ~ icontext(ifelse(`After New Normal` >`Before New Normal`,"arrow-up", "arrow-down"), `After New Normal`))
+
+)) 
+  
+```
+
+
+
+<br>
+
+**Statement 2: The COVID-19 positive rate has gone down and recovery rate has improved greatly to almost 66%**
+
+
+
+
+
+
+
+
+
+
+<center>
+
+```{r positiverate-plot, fig.cap= "The positivity rate of Covid-19 in Indonesia"}
+cuts1 <- data.frame(Ref="New Normal started", vals=c(ymd("2020-06-05")))
+cuts2 <- data.frame(Ref="Statement 2 made", vals=c(ymd("2020-08-14")))
+cuts3 <- data.frame(Ref="Statement 4 made", vals=c(ymd("2020-08-20")))
+cuts <- rbind(cuts1, cuts2, cuts3)
+  
+fig3 <- ggplot(idn_data_new) +
+  geom_line(aes(x = date, y = positive_rate), color = "#48C9B0") +
+  geom_smooth(aes(x = date, y = positive_rate),
+              method = "loess", se = FALSE, color = "#5C8F8D") +
+  geom_vline(data = cuts , aes(xintercept=vals, color= Ref),
+             show.legend = FALSE) +
+  geom_text(mapping = aes(x = vals,
+                          y = 0,
+                          label = Ref,
+                          hjust = 0,
+                          vjust = -0.5,
+                          angle = 90),
+              data = cuts) +
+  ylab("Postive rate (%)") +
+  xlab("Date") +
+  theme_light()
+
+fig3
+```
+</center>
 
 ```{r}
 
@@ -285,14 +446,46 @@ Aug13 <- idn_data_new %>% filter(date == "2020-08-13")
 Mar10 <- idn_data_new %>% filter(date == "2020-03-10")
 
 
-recov_delta1 <- (Aug14$recovery_rate - Aug13$recovery_rate)/ Aug13$recovery_rate * 100
-recov_delta2 <- (Aug14$recovery_rate - Mar10$recovery_rate)/ Mar10$recovery_rate * 100
+recov_delta1 <- (Aug14$recovered - Aug13$recovered)/ Aug13$recovered * 100
+recov_delta2 <- (Aug14$recovered - Mar10$recovered)/ Mar10$recovered * 100
 
 
 ```
 
 
+
+
+
+
+
+
 **Statement 3: There will not be a second wave of COVID-19 outbreak in Indonesia**
+
+
+
+<center>
+
+```{r second-wave, fig.cap= "The number of confirmed cases daily in Indonesia"}
+
+
+fig4 <- ggplot(idn_data_new) +
+  geom_line(aes(x = date,
+                y = daily_confirmed), color = "#60B0DD") +
+  geom_smooth(aes(x = date,
+                y = daily_confirmed),
+              method = "loess", se = FALSE, color = "#21618C") +
+  ylab("Daily confirmed cases") +
+  xlab("Date") +
+  theme_light()
+
+
+ggplotly(fig4)
+
+
+```
+
+</center>
+
 
 **Statement 4: COVID-19 in Indonesia is now under control**
 
