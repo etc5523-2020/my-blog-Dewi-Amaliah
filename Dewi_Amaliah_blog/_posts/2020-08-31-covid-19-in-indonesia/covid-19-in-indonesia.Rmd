@@ -93,9 +93,9 @@ statement <- tribble(~id, ~content, ~start, ~end,
                 1, "Covid-19 virus is weaker in Indonesia due to relatively high temperature","2020-04-03", NA, 
                 2, "Covid-19 spread has gone down, so the new normal scheme could be applied", "2020-06-02", NA, 
                 3, "The number of Covid-19 red zone has dropped", "2020-08-18", NA, 
-                4, "There will not be a second wave of Covid-19 outbreak in Indonesia", "2020-08-18", NA, 
+                4, "There will not be a second wave of Covid-19 outbreak in Indonesia", "2020-08-13", NA, 
                 5, "The Covid-19 positive rate has gone down and recovery rate has improved greatly to almost 66%", "2020-08-14", NA, 
-                6, "Covid-19 in Indonesia is now undercontrol", "2020-08-20", NA, 
+                6, "Covid-19 in Indonesia is now undercontrol", "2020-08-19", NA, 
                 )
 
 timevis(statement, showZoom = FALSE, height = "350px", width = "800px")
@@ -205,7 +205,7 @@ In addition, I would not check all of the statements in Figure \@ref(fig:stateme
 
 > **Statement 1: Covid-19 spread has gone down, so the new normal scheme could be applied.**
 
-This claim was stated by the Coordinating Minister of Maritime and Investment, Luhut Binsar Pandjaitan, on June, 2nd 2020. He claimed that the decision to reopen the economy and ease the mobility restriction, which is called the "New Normal", is based on data that the spread of the virus has declined and the number of new cases has gone down to 600 cases per day on average [@detik].  
+This claim was stated by the Coordinating Minister for Maritime Affairs and Investment, Luhut Binsar Pandjaitan, on June, 2nd 2020. He claimed that the decision to reopen the economy and ease the mobility restriction, which is called the "New Normal", is based on data that the spread of the virus has declined and the number of new cases has gone down to 600 cases per day on average [@detik].  
 
 **The Fact**
 
@@ -399,15 +399,27 @@ formattable(summary_table_new, align =c("l","r","r"), list(
 
 <br>
 
-**Statement 2: The COVID-19 positive rate has gone down and recovery rate has improved greatly to almost 66%**
+> **Statement 2: The COVID-19 positive rate has gone down and recovery rate has improved greatly to almost 66%**
+
+This contend was stated also by the Coordinating Minister for Maritime Affairs and Investment on August, 14th 2020. [@statement2]
+Luhut Claimed that the handling of Covid-19, shown by the declining positive rate, has improved. Moreover, the recovery rate is nearly 66 percent. 
 
 
+**The Fact**
 
+```{r recovrate}
 
+Aug14 <- idn_data_new %>% filter(date == "2020-08-14")
 
+recov_delta1 <- round(Aug14$recovered/ Aug14$confirmed * 100, 2)
 
+```
 
+Figure \@ref(fig:positiverate-plot) shows that the positive rate has decreased when compared to the start of the pandemic in the country. However, in this figure, we can see that there is a slight inverted curve which indicates that the positive rate is increasing again.
 
+Regarding 66 percent recovery claims, I tried to divide the recovered cases by the confirmed cases on that date and got a result of `r recov_delta1` percent. This means that the claim is true. 
+
+But wait, is this good news? According to the health experts, using the recovery rate as an indicator to assess the performance of handling Covid-19 is not ideal. This is because first, the recovery rate is calculated by dividing the number of discharged patients with total Covid-19 patients. However, those who are hospitalized can either recover or die, so they cannot be included in the calculation. [@expert1] Secondly, 99% of people infected with COVID recovers, so the number of recovery rate is not really useful.[@expert2]
 
 
 <center>
@@ -439,28 +451,16 @@ fig3
 ```
 </center>
 
-```{r}
-
-Aug14 <- idn_data_new %>% filter(date == "2020-08-14")
-Aug13 <- idn_data_new %>% filter(date == "2020-08-13")
-Mar10 <- idn_data_new %>% filter(date == "2020-03-10")
 
 
-recov_delta1 <- (Aug14$recovered - Aug13$recovered)/ Aug13$recovered * 100
-recov_delta2 <- (Aug14$recovered - Mar10$recovered)/ Mar10$recovered * 100
+> **Statement 3: There will not be a second wave of COVID-19 outbreak in Indonesia**
+
+The Coordinating Minister for Maritime Affairs and Investment did seem to like to preach "good news". On 13 August 2020, he claimed that Indonesia would not experience the second wave of Covid-19.[@secondwave]
 
 
-```
+**The Fact**
 
-
-
-
-
-
-
-
-**Statement 3: There will not be a second wave of COVID-19 outbreak in Indonesia**
-
+The fact of this claim is pretty straight forward. It is true. According to Dr.Anthony Fauci, the director of the U.S. National Institute of Allergy and Infectious Diseases, the second wave happens if the number of confirmed cases goes up and then comes back down to reach low single digits.[@secondwavedef] The example of this case is New Zealand, who had 24 days streak of zeros case before getting the new cases again. Hence, how could Indonesia experience the second wave, if the first wave has not yet reached its peak?  
 
 
 <center>
@@ -487,9 +487,26 @@ ggplotly(fig4)
 </center>
 
 
-**Statement 4: COVID-19 in Indonesia is now under control**
+> **Statement 4: COVID-19 in Indonesia is now under control**
 
+Now, you could guess who made the statement. Yes, it is correct. This statement was, again, told by the Minister for Maritime Affairs and Investment on 19 August 2020. 
+
+**The Fact**
+
+```{r}
+
+postiverateaugdat <- idn_data_new %>% filter(date == "2020-08-19")
+
+positiverate19aug <- postiverateaugdat$positive_rate
+```
+
+
+The fact is this claim is might be incorrect, at least according to the WHO criteria. According to the WHO in May, one of the indicator that the epidemic is under control is that positive rate is less than 5% [@postiveratewho]. As per date of this statement, the positive rate in Indonesia is `r positiverate19aug` percent.
 
 
 ## Conclusion
+
+3 out of 4 of Luhut's claims, which were checked with data from various sources, are correct, in numerical terms. However, if we look at the bigger picture and the context, these claims are actually busted. For example, if the trend is seen in its entirety since the beginning of the pandemic, the cases and the spread of Covid-19 in Indonesia cannot be said as declined. Besides, contextually, the usage of recovered cases as an indicator to claim the success of Covid-19 handling can not be justified. 
+
+The ugly truth about the Covid-19 situation in Indonesia is that the cases are still increasing, the testing rates per billion population are still small, and the positive rate is still above 5 percent. However, the uglier truth is that the "false positive claims" have been made by the person who should have known better.
 
