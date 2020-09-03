@@ -1,8 +1,8 @@
 [
   {
     "path": "posts/2020-08-31-covid-19-in-indonesia/",
-    "title": "The Ugly Truth about COVID-19 Situation in Indonesia",
-    "description": "A short description of the post.",
+    "title": "The Ugly Truth about Covid-19 Situation in Indonesia",
+    "description": "This article aims to do a fact checking of some officials' controversial statements related to Covid-19 situation in Indonesia.",
     "author": [
       {
         "name": "Dewi Lestari Amaliah",
@@ -14,9 +14,9 @@
       "COVID-19",
       "Data Analysis"
     ],
-    "preview": {},
-    "last_modified": "2020-09-01T02:34:24+10:00",
-    "input_file": "covid-19-in-indonesia.utf8.md"
+    "preview": "posts/2020-08-31-covid-19-in-indonesia/maskandcovid.JPG",
+    "last_modified": "2020-09-04T03:39:14+10:00",
+    "input_file": {}
   },
   {
     "path": "posts/2020-08-29-building-website-with-distill-r/",

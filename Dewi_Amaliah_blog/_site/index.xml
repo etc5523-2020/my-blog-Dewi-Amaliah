@@ -7,16 +7,17 @@
     <description>datain
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 30 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2020 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>The Ugly Truth about COVID-19 Situation in Indonesia</title>
+      <title>The Ugly Truth about Covid-19 Situation in Indonesia</title>
       <dc:creator>Dewi Lestari Amaliah</dc:creator>
       <link>https://datain360.com/posts/2020-08-31-covid-19-in-indonesia</link>
-      <description>A short description of the post.</description>
+      <description>This article aims to do a fact checking of some officials' controversial statements related to Covid-19 situation in Indonesia.</description>
       <category>COVID-19</category>
       <category>Data Analysis</category>
       <guid>https://datain360.com/posts/2020-08-31-covid-19-in-indonesia</guid>
-      <pubDate>Sun, 30 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 31 Aug 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://datain360.com/posts/2020-08-31-covid-19-in-indonesia/maskandcovid.JPG" medium="image" type="image/jpeg"/>
     </item>
     <item>
       <title>Building Website with Distill Package in R</title>

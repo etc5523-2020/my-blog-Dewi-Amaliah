@@ -13,7 +13,8 @@ output:
 categories:
   - COVID-19
   - Data Analysis
-draft: TRUE
+preview: maskandcovid.JPG
+draft: FALSE
 ---
 
 ```{r setup, include=FALSE}
@@ -111,7 +112,7 @@ timevis(statement, showZoom = FALSE, height = "350px", width = "800px")
 ## Data Description
 
 
-```{r}
+```{r data-download}
 
 # download data for all countries available in the package and all of the compiled data
 merged_data <- download_merged_data(cached = TRUE, silent = TRUE)
@@ -122,7 +123,7 @@ idn_data <- merged_data %>% filter(iso3c == "IDN") %>%
   filter(confirmed != 0)
 ```
 
-```{r}
+```{r num-countries}
 countries <- merged_data %>%
   group_by(country) %>%
   count()
@@ -134,9 +135,11 @@ ncountries <- nrow(countries)
 This article is utilized the compiled dataset from `tidycovid19` R package [@tidycovi19]. This package comprises of Covid-19 related data from various source at the country-day level. Initially, there are `r ncountries` countries covered in this dataset, but for this article purpose, I used only Indonesia data start from the first case was recorded. Besides, to achieve the aim of this article, I mainly used the confirmed, fatality, and recovered cases data, which are compiled from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu]; the lockdown measure data from ACAPS [@acaps]; the testing data from Our World in Data [@testing]; and the population data from the World Bank [@population]. 
 
 
-That being said, I also provided most of the variables in the compiled data in the package in Table \@ref(tab:idn-table). Note that I excluded the region variable (East Asia and Pacific), the income (upper middle income), and the time stamp variable (because it is the same with date variable) from the display.
+That being said, I also provided most of the variables in the compiled data in the package in Table 1. Note that I excluded the region variable (East Asia and Pacific), the income (upper middle income), and the time stamp variable (because it is the same with date variable) from the display.
 
 <br>
+
+Table 1. The raw data of Covid-19 in Indonesia
 
 ```{r idn-table}
 
@@ -150,7 +153,7 @@ DT::datatable(idn_data,
 
 <details><summary> The definition of each variable can be seen here. </summary>
 
-```{r}
+```{r vd}
 vd <- tidycovid19_variable_definitions
 
 kable(vd, col.names = c("Variable Name", "Source", "Definition"), caption = "Variable definition of Covid-19 dataset") %>% kable_styling(bootstrap_options = c("striped", "hover"))
@@ -174,6 +177,8 @@ The analysis is performed mainly using the functions in `tidyverse` [@tidyverse]
 **Limitation**
 
 Since the results of the Covid-19 test in Indonesia were not released on the same day, there should be a lag between the number of cases and the number of tests used to calculate the positive rate. However, the length of lag between the test time and the results varies between test locations, making it difficult to determine the right lag. Therefore, in the calculation, the positive rate is based on the cumulative number. 
+
+For the lockdown variable in the dataset, that I previously wanted to use, it is apparently did not match with the date of "New Normal" policy began in Indonesia. Thus, I ended up not using this data. 
 
 
 ```{r daily}
@@ -212,7 +217,7 @@ This claim was stated by the Coordinating Minister for Maritime Affairs and Inve
 There are two main points that I would check in this statement. First, is the declining of the average of new cases per day and the second is the declining of the virus spread. 
 
 
-```{r}
+```{r june2}
 June2 <- idn_data_new %>% filter(date == "2020-06-02")
 ```
 
@@ -280,7 +285,7 @@ fig
 
 
 
-```{r}
+```{r govt-policy}
 # create new variable: the goverment policy, to see the change the before and after new normal
 idn_data_new <- idn_data_new %>% mutate(govt_policy = case_when(date <= "2020-06-04" ~ "Before New Normal",
                                                                 date > "2020-06-04" ~ "After New Normal"))
@@ -493,7 +498,7 @@ Now, you could guess who made the statement. Yes, it is correct. This statement 
 
 **The Fact**
 
-```{r}
+```{r under-control}
 
 postiverateaugdat <- idn_data_new %>% filter(date == "2020-08-19")
 
@@ -501,12 +506,12 @@ positiverate19aug <- postiverateaugdat$positive_rate
 ```
 
 
-The fact is this claim is might be incorrect, at least according to the WHO criteria. According to the WHO in May, one of the indicator that the epidemic is under control is that positive rate is less than 5% [@postiveratewho]. As per date of this statement, the positive rate in Indonesia is `r positiverate19aug` percent.
+The fact is this claim is might be incorrect, at least according to the WHO criteria. According to the WHO in May, one of the indicator that the epidemic is under control is that positive rate is less than 5% [@testing]. As per date of this statement, the positive rate in Indonesia is `r positiverate19aug` percent.
 
 
 ## Conclusion
 
-3 out of 4 of Luhut's claims, which were checked with data from various sources, are correct, in numerical terms. However, if we look at the bigger picture and the context, these claims are actually busted. For example, if the trend is seen in its entirety since the beginning of the pandemic, the cases and the spread of Covid-19 in Indonesia cannot be said as declined. Besides, contextually, the usage of recovered cases as an indicator to claim the success of Covid-19 handling can not be justified. 
+Three out of four of Luhut's claims, which were checked with data from various sources, are correct, in numerical terms. However, if we look at the bigger picture and the context, these claims are actually busted. For example, if the trend is seen in its entirety since the beginning of the pandemic, the cases and the spread of Covid-19 in Indonesia cannot be said as declined. Besides, contextually, the usage of recovered cases as an indicator to claim the success of Covid-19 handling can not be justified. 
 
 The ugly truth about the Covid-19 situation in Indonesia is that the cases are still increasing, the testing rates per billion population are still small, and the positive rate is still above 5 percent. However, the uglier truth is that the "false positive claims" have been made by the person who should have known better.
 
