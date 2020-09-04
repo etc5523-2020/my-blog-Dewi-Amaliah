@@ -45,9 +45,9 @@ library(lubridate)
 html, body, p {
   
   font-family: 'Lato', sans-serif;
-  font-weight: 350;
+  font-weight: 200;
   line-height: 1.3; 
-  font-size: 15px;
+  font-size: 1.0em;
   color: black;
   font-style: normal;
   
@@ -168,7 +168,7 @@ kable(vd, col.names = c("Variable Name", "Source", "Definition"), caption = "Var
 
 The analysis is performed mainly using the functions in `tidyverse` [@tidyverse] package in R [@r]. I also used `DT` [@DT], `kableExtra` [@kableExtra], `timevis` [@timevis], `plotly` [@plotly], `gridExtra` [@gridExtra], and `formattable` [@formattable] packages. Since `tidycovid19` only provides cumulative cases, death, recovered, and tests, I wrangled the dataset to obtain the daily number. I also mutated new variables, namely infection rate, positive rate, and testing rate. The definition of those variables is as follows:
 
-- Infection rate: According to @infectionrate, there are three ways of calculating the infection rate. The formula I used here is the number of infected people divided by the total population multiplied by the constant variable, which is 1,000,000 people, this figure is calculated in a daily level. 
+- Infection rate: According to Health Centric Advisors @infectionrate, there are three ways of calculating the infection rate. The formula I used here is the number of infected people divided by the total population multiplied by the constant variable, which is 1,000,000 people, this figure is calculated in a daily level. 
 - Positive rate: It is the fraction of tests that have a positive result. The calculation is the number of cumulative confirmed cases divided by the total tests (percentage) [@positiverate].
 - Testing Rate : The number of test per 1,000,000 population at daily level. 
 
@@ -178,7 +178,7 @@ The analysis is performed mainly using the functions in `tidyverse` [@tidyverse]
 
 Since the results of the Covid-19 test in Indonesia were not released on the same day, there should be a lag between the number of cases and the number of tests used to calculate the positive rate. However, the length of lag between the test time and the results varies between test locations, making it difficult to determine the right lag. Therefore, in the calculation, the positive rate is based on the cumulative number. 
 
-For the lockdown variable in the dataset, that I previously wanted to use, it is apparently did not match with the date of "New Normal" policy began in Indonesia. Thus, I ended up not using this data. 
+For the lockdown variable in the dataset, that I previously wanted to use, it apparently did not match with the date of "New Normal" policy began in Indonesia. Thus, I ended up not using this data. 
 
 
 ```{r daily}
@@ -293,7 +293,7 @@ idn_data_new <- idn_data_new %>% mutate(govt_policy = case_when(date <= "2020-06
 
 
 Despite this positive trend, Indonesian government has applied the "New Normal" scheme started from 5th June 2020 [@newnormalstarted]. Therefore, I was curious about how the statistics changed after this scheme put in.
-I used median value as the summary statistics because the distribution of the indicators, which are the daily cases, daily fatality, daily recovered, daily testing, infection rate, and testing rate, are mostly skewed, especially before "New Normal" phase. According The Australian Bureau of Statistics (ABS) [@abs], the median is more robust to skewed data and is sometimes the favorable measure of central tendency when the distribution is asymmetric. 
+I used median value as the summary statistics because the distribution of the indicators, which are the daily cases, daily fatality, daily recovered, daily testing, infection rate, testing rate, and positive rate are mostly skewed, especially before "New Normal" phase. According The Australian Bureau of Statistics (ABS) [@abs], the median is more robust to skewed data and is sometimes the favorable measure of central tendency when the distribution is asymmetric. 
 
 <details><summary> Expand here to see the distribution.</summary>
 
@@ -379,7 +379,7 @@ All indicators in Table 2. show an increase after the "New Normal" policy was im
 
 In fact, this does not necessarily explain the true condition because the number of cases is greatly influenced by the number of people tested. If we look at the number of people tested, there was an increase after the New Normal period, even though the rate is only 43 people per 1,000,000 population per day. Hence, increasing cases makes sense.
 
-Furthermore, if we look at a positive rate, we can see that looking at the number of positive cases only is not enough. In fact, there was a decrease in positive rates after the "New Normal". However, bear in mind that the positive rate here is cumulative figure. In addition, speaking of positive rate and "New Normal", the WHO recommended that the positive rate from a comprehensive testing program should be at or below 5% for at least 14 days to ease the restriction and resume the economic and social activity.[@positiverate] How about Indonesia? Figure \@ref(fig:positiverate-plot) shows the answer that Indonesia did not follow the WHO reccommendation because the positive rate was still above 10 percent when the "New Normal" began. 
+Furthermore, if we look at a positive rate, we can see that looking at the number of positive cases only is not enough. In fact, there was a decrease in positive rates after the "New Normal". However, bear in mind that the positive rate here is cumulative figure. In addition, speaking of positive rate and "New Normal", the WHO recommended that the positive rate from a comprehensive testing program should be at or below 5 percent for at least 14 days to ease the restriction and resume the economic and social activity [@positiverate]. How about Indonesia? Figure \@ref(fig:positiverate-plot) shows the answer that Indonesia did not follow the WHO reccommendation because the positive rate was still above 10 percent when the "New Normal" began. 
 
 <br>
 
@@ -406,7 +406,7 @@ formattable(summary_table_new, align =c("l","r","r"), list(
 
 > **Statement 2: The COVID-19 positive rate has gone down and recovery rate has improved greatly to almost 66%**
 
-This contend was stated also by the Coordinating Minister for Maritime Affairs and Investment on August, 14th 2020. [@statement2]
+This contend was stated also by the Coordinating Minister for Maritime Affairs and Investment on August, 14th 2020 [@statement2].
 Luhut Claimed that the handling of Covid-19, shown by the declining positive rate, has improved. Moreover, the recovery rate is nearly 66 percent. 
 
 
@@ -424,7 +424,7 @@ Figure \@ref(fig:positiverate-plot) shows that the positive rate has decreased w
 
 Regarding 66 percent recovery claims, I tried to divide the recovered cases by the confirmed cases on that date and got a result of `r recov_delta1` percent. This means that the claim is true. 
 
-But wait, is this good news? According to the health experts, using the recovery rate as an indicator to assess the performance of handling Covid-19 is not ideal. This is because first, the recovery rate is calculated by dividing the number of discharged patients with total Covid-19 patients. However, those who are hospitalized can either recover or die, so they cannot be included in the calculation. [@expert1] Secondly, 99% of people infected with COVID recovers, so the number of recovery rate is not really useful.[@expert2]
+But wait, is this good news? According to the health experts, using the recovery rate as an indicator to assess the performance of handling Covid-19 is not ideal. This is because first, the recovery rate is calculated by dividing the number of discharged patients with total Covid-19 patients. However, those who are hospitalized can either recover or die, so they cannot be included in the calculation [@expert1]. Secondly, 99% of people infected with COVID recovers, so the number of recovery rate is not really useful [@expert2].
 
 
 <center>
@@ -460,12 +460,12 @@ fig3
 
 > **Statement 3: There will not be a second wave of COVID-19 outbreak in Indonesia**
 
-The Coordinating Minister for Maritime Affairs and Investment did seem to like to preach "good news". On 13 August 2020, he claimed that Indonesia would not experience the second wave of Covid-19.[@secondwave]
+The Coordinating Minister for Maritime Affairs and Investment did seem to like to preach "good news". On 13 August 2020, he claimed that Indonesia would not experience the second wave of Covid-19 [@secondwave].
 
 
 **The Fact**
 
-The fact of this claim is pretty straight forward. It is true. According to Dr.Anthony Fauci, the director of the U.S. National Institute of Allergy and Infectious Diseases, the second wave happens if the number of confirmed cases goes up and then comes back down to reach low single digits.[@secondwavedef] The example of this case is New Zealand, who had 24 days streak of zeros case before getting the new cases again. Hence, how could Indonesia experience the second wave, if the first wave has not yet reached its peak?  
+The fact of this claim is pretty straight forward. It is true. According to Dr.Anthony Fauci, the director of the U.S. National Institute of Allergy and Infectious Diseases, the second wave happens if the number of confirmed cases goes up and then comes back down to reach low single digits [@secondwavedef]. The example of this case is New Zealand, who had 24 days streak of zeros case before getting the new cases again. Hence, how could Indonesia experience the second wave, if the first wave has not yet reached its peak?  
 
 
 <center>
@@ -502,16 +502,16 @@ Now, you could guess who made the statement. Yes, it is correct. This statement 
 
 postiverateaugdat <- idn_data_new %>% filter(date == "2020-08-19")
 
-positiverate19aug <- postiverateaugdat$positive_rate
+positiverate19aug <- round(postiverateaugdat$positive_rate,2)
 ```
 
 
-The fact is this claim is might be incorrect, at least according to the WHO criteria. According to the WHO in May, one of the indicator that the epidemic is under control is that positive rate is less than 5% [@testing]. As per date of this statement, the positive rate in Indonesia is `r positiverate19aug` percent.
+The fact is this claim is might be incorrect, at least according to the WHO criteria. According to the WHO in May, one of the indicator that the epidemic is under control is that the positive rate is less than 5 percent [@testing]. As per date of this statement, the positive rate in Indonesia is `r positiverate19aug` percent.
 
 
 ## Conclusion
 
-Three out of four of Luhut's claims, which were checked with data from various sources, are correct, in numerical terms. However, if we look at the bigger picture and the context, these claims are actually busted. For example, if the trend is seen in its entirety since the beginning of the pandemic, the cases and the spread of Covid-19 in Indonesia cannot be said as declined. Besides, contextually, the usage of recovered cases as an indicator to claim the success of Covid-19 handling can not be justified. 
+Three out of four of Luhut's claims, which were checked with data from various sources, were correct, in numerical terms. However, if we look at the bigger picture and the context, these claims were actually busted. For example, if the trend is seen in its entirety since the beginning of the pandemic, the cases and the spread of Covid-19 in Indonesia could not be said as declined. Besides, contextually, the usage of recovered cases as an indicator to claim the success of Covid-19 handling could not be justified. 
 
 The ugly truth about the Covid-19 situation in Indonesia is that the cases are still increasing, the testing rates per billion population are still small, and the positive rate is still above 5 percent. However, the uglier truth is that the "false positive claims" have been made by the person who should have known better.
 
