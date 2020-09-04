@@ -208,7 +208,7 @@ In addition, I would not check all of the statements in Figure \@ref(fig:stateme
 
 <br>
 
-> **Statement 1: Covid-19 spread has gone down, so the new normal scheme could be applied.**
+> **Statement 1: Covid-19 spread has gone down, so the "New Normal" scheme could be applied.**
 
 This claim was stated by the Coordinating Minister for Maritime Affairs and Investment, Luhut Binsar Pandjaitan, on June, 2nd 2020. He claimed that the decision to reopen the economy and ease the mobility restriction, which is called the "New Normal", is based on data that the spread of the virus has declined and the number of new cases has gone down to 600 cases per day on average [@detik].  
 
@@ -375,15 +375,9 @@ summary_table_new <-  summary_table_pivot_wider[, col_order]
 ```
 <br>
 
-All indicators in Table 2. show an increase after the "New Normal" policy was implemented. If we look at the number of confirmed cases and the infection rate, we will conclude that after the "New Normal", there has been a drastic increase in Covid-19 cases in Indonesia by about five times. Likewise with the death toll and recovery cases, the number was increasing because the number of cases was increasing.
 
-In fact, this does not necessarily explain the true condition because the number of cases is greatly influenced by the number of people tested. If we look at the number of people tested, there was an increase after the New Normal period, even though the rate is only 43 people per 1,000,000 population per day. Hence, increasing cases makes sense.
 
-Furthermore, if we look at a positive rate, we can see that looking at the number of positive cases only is not enough. In fact, there was a decrease in positive rates after the "New Normal". However, bear in mind that the positive rate here is cumulative figure. In addition, speaking of positive rate and "New Normal", the WHO recommended that the positive rate from a comprehensive testing program should be at or below 5 percent for at least 14 days to ease the restriction and resume the economic and social activity [@positiverate]. How about Indonesia? Figure \@ref(fig:positiverate-plot) shows the answer that Indonesia did not follow the WHO reccommendation because the positive rate was still above 10 percent when the "New Normal" began. 
-
-<br>
-
-Table 2. Covid-19 indicators before and after 'New Normal' policy in Indonesia
+Table 2. Covid-19 indicators before and after "New Normal" policy in Indonesia
 
 ```{r sum-table, fig.cap= "Covid-19 indicators before and after 'New Normal' policy in Indonesia (Daily figure)"}
 
@@ -400,6 +394,12 @@ formattable(summary_table_new, align =c("l","r","r"), list(
   
 ```
 
+
+All indicators in Table 2. show an increase after the "New Normal" policy was implemented. If we look at the number of confirmed cases and the infection rate, we will conclude that after the "New Normal", there has been a drastic increase in Covid-19 cases in Indonesia by about five times. Likewise with the death toll and recovery cases, the number was increasing because the number of cases was increasing.
+
+In fact, this does not necessarily explain the true condition because the number of cases is greatly influenced by the number of people tested. If we look at the number of people tested, there was an increase after the "New Normal" period, even though the rate is only 43 people per 1,000,000 population per day. Hence, increasing cases makes sense.
+
+Furthermore, if we look at a positive rate, we can see that looking at the number of positive cases only is not enough. In fact, there was a decrease in positive rates after the "New Normal". However, bear in mind that the positive rate here is cumulative figure. In addition, speaking of positive rate and "New Normal", the WHO recommended that the positive rate from a comprehensive testing program should be at or below 5 percent for at least 14 days to ease the restriction and resume the economic and social activity [@positiverate]. How about Indonesia? Figure \@ref(fig:positiverate-plot) shows the answer that Indonesia did not follow the WHO reccommendation because the positive rate was still above 10 percent when the "New Normal" began. 
 
 
 <br>
@@ -457,6 +457,7 @@ fig3
 </center>
 
 
+<br>
 
 > **Statement 3: There will not be a second wave of COVID-19 outbreak in Indonesia**
 
@@ -491,6 +492,7 @@ ggplotly(fig4)
 
 </center>
 
+<br>
 
 > **Statement 4: COVID-19 in Indonesia is now under control**
 
