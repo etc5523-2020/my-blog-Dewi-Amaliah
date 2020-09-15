@@ -58,12 +58,14 @@ d-article table th, d-article table td {
 
 Since being declared as a global pandemic by the World Health Organization (WHO) on 12 March 2020, Covid-19 has affected 213 countries, including the conflict-torn country, Afghanistan [@countries]. This country has its first confirmed case recorded on 24 February 2020 in Herat after a citizen who had just returned from Iran contracted with the virus [@firstcase].
 
-Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by conflict [@ocha]. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 [@vulnerable]. Quoting the the Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA), Tadamichi Yamamoto, "Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence" [@vulnerable]. In other words, the Afghan people are vulnerable. 
+Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by conflict [@ocha]. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 [@vulnerable]. Quoting the the Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA), Tadamichi Yamamoto, "Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence" [@vulnerable]. In other words, the Afghan people are already vulnerable. 
 
 This article aims to convey the reasons why the conflict made the country hit harder by Covid-19. The analysis would be focus on two aspects, namely the health care and the population vulnerability.  
 
 
 ## Data Description
+
+The data set
 
 ```{r data-download}
 
