@@ -515,5 +515,5 @@ The fact is this claim is might be incorrect, at least according to the WHO crit
 
 Three out of four of Luhut's claims, which were checked with data from various sources, were correct, in numerical terms. However, if we look at the bigger picture and the context, these claims were actually busted. For example, if the trend is seen in its entirety since the beginning of the pandemic, the cases and the spread of Covid-19 in Indonesia could not be said as declined. Besides, contextually, the usage of recovered cases as an indicator to claim the success of Covid-19 handling could not be justified. 
 
-The ugly truth about the Covid-19 situation in Indonesia is that the cases are still increasing, the testing rates per billion population are still small, and the positive rate is still above 5 percent. However, the uglier truth is that the "false positive claims" have been made by the person who should have known better.
+The ugly truth about the Covid-19 situation in Indonesia is that the cases are still increasing, the testing rates per million population are still small, and the positive rate is still above 5 percent. However, the uglier truth is that the "false positive claims" have been made by the person who should have known better.
 
