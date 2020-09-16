@@ -1,7 +1,7 @@
 ---
 title: "Covid and Conflict: Why the pandemic could be worse in Afghanistan?"
 description: |
-  This article aims to convey the reason why the conflicted country, in this case is Afghanistan, might be hit harder by Covid-19.
+  This article aims to convey the reason why the conflicted country, in this case is Afghanistan, might be hit hard by Covid-19.
 author:
   - name: Dewi Lestari Amaliah
     url: {}
@@ -27,6 +27,7 @@ library(plotly)
 library(emojifont)
 library(hrbrthemes)
 library(waffle)
+library(extrafont)
 ```
 
 
@@ -61,67 +62,59 @@ d-article table th, d-article table td {
 
 Since being declared as a global pandemic by the World Health Organization (WHO) on 12 March 2020, Covid-19 has affected 213 countries, including the conflict-torn country, Afghanistan [@countries]. This country has its first confirmed case recorded on 24 February 2020 in Herat after a citizen who had just returned from Iran contracted with the virus [@firstcase].
 
-Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by conflict [@ocha]. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 [@vulnerable]. Quoting the the Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA), Tadamichi Yamamoto, "Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence" [@vulnerable]. In other words, the Afghan people are already vulnerable. 
+Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by the conflict [@ocha]. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 [@vulnerable]. Quoting the the Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA), Tadamichi Yamamoto, "Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence" [@vulnerable]. In other words, the Afghan people are already vulnerable before Covid-19 attacks. 
 
-This article aims to convey the reasons why the conflict made the country hit harder by Covid-19. The analysis would be focus on two aspects, namely the health care and the population vulnerability.  
+This article aims to convey the reasons why the conflict made the country might be hit hard by Covid-19. The analysis would be focus on two aspects, namely the health care and the population vulnerability.  
 
 
-## Data Description
+## Data Source
 
-The data set
+In doing analysis, I used several data sets from various sources. For the Covid-19 situation in Afghanistan, I used the data of confirmed cases from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu] and the population data from the World Bank [@population]. I also used the mobility data from Google Covid-19 Community Mobile Report [@googlecmr] to analyze the population vulnerability. These data have been compiled in the `tidycovid19` R package by Joachim Gassen [@tidycovi19], hence I directly downloaded it from this package. For the health care vulnerability analysis, I mainly used the data of health sector profile from the Afghanistan National Statistics and Information Authority [@nsia] and the government national budget data from the Afghanistan Ministry of Finance [@mof].  
+
 
 ```{r data-download}
 
 # download data for all countries available in the package and all of the compiled data
 merged_data <- download_merged_data(cached = TRUE, silent = TRUE)
 
-# filter the data only for Indonesia 
+# filter the data only for Afghanistan 
 afghan_data <- merged_data %>% filter(iso3c == "AFG") %>%
-  #select(-ecdc_cases, -ecdc_deaths, -region, -income, -timestamp) %>%
+  select(-ecdc_cases, -ecdc_deaths) %>%
   filter(confirmed != 0)
 ```
 
-## Covid-19 in Afghanistan
+**Analysis Tools**
+
+The analysis is performed using R [@r]. The data is wrangled mainly using the tidyverse function [@tidyverse]. Further, the data is visualized using the function in `ggplot2` [@ggplot2], plotly [@plotly] and `waffle` [@waffle].
+
+
+## Covid-19 Cases in Afghanistan
+
+The confirmed cases data from `tidycovid19` is provided in cumulative-wise, hence I wrangled the data first to get the number of daily cases. 
+
+
+```{r}
+afghan_data_new <- afghan_data %>% select(iso3c, country, date, confirmed, population) %>% 
+  mutate(lag_confirmed = lag(confirmed, 1),
+         daily_confirmed = case_when(date == "2020-02-24" ~ confirmed,
+                                     date > "2020-02-24" ~ confirmed - lag_confirmed),
+         infection_rate = daily_confirmed / population * 1000000)
+```
+
+
+
+
 
 ## Why it could be worse?
 
 **Health Care Vulnerability**
 
-```{r}
-data.frame(
-  parts = factor(rep(month.abb[1:3], 3), levels=month.abb[1:3]),
-  vals = c(10, 20, 30, 6, 14, 40, 30, 20, 10),
-  col = rep(c("blue", "black", "red"), 3),
-  fct = c(rep("Thing 1", 3),
-          rep("Thing 2", 3),
-          rep("Thing 3", 3))
-) -> xdf
-```
 
 
-```{r}
-xdf %>%
-  count(parts, wt = vals) %>%
-  ggplot(aes(label = parts, values = n)) +
-  geom_pictogram(
-    n_rows = 20, size = 6, aes(colour = parts), flip = TRUE,
-    family = "FontAwesome5Brands-Regular"
-  ) +
-  scale_color_manual(
-    name = NULL,
-    values = c("#073f9c", "black", "#f34323"),
-    labels = c("BitBucket", "GitHub", "Other")
-  ) +
-  scale_label_pictogram(
-    name = NULL,
-    values = c("bitbucket", "github", "git-alt"),
-    labels = c("BitBucket", "GitHub", "Other")
-  ) +
-  coord_equal() +
-  theme_ipsum_rc(grid="") +
-  theme_enhance_waffle() +
-  theme(legend.text = element_text(hjust = 0, vjust = 1))
-```
+
+
+
+
 
 
 **Population Vulnerability**
