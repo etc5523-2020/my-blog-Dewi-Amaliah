@@ -72,8 +72,7 @@ This article aims to convey the reasons why the conflict made the country might 
 In doing analysis, I used several data sets from various sources. For the Covid-19 situation in Afghanistan, I used the data of confirmed cases from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu] and the population data from the World Bank [@population]. I also used the mobility data from Google Covid-19 Community Mobile Report [@googlecmr] to analyze the population vulnerability. These data have been compiled in the `tidycovid19` R package by Joachim Gassen [@tidycovi19], hence I directly downloaded it from this package. For the health care vulnerability analysis, I mainly used the data of health sector profile from the Afghanistan National Statistics and Information Authority [@nsia] and the government national budget data from the Afghanistan Ministry of Finance [@mof].  
 
 
-```{r data-download}
-
+```{r covid-data}
 # download data for all countries available in the package and all of the compiled data
 merged_data <- download_merged_data(cached = TRUE, silent = TRUE)
 
@@ -82,6 +81,52 @@ afghan_data <- merged_data %>% filter(iso3c == "AFG") %>%
   select(-ecdc_cases, -ecdc_deaths) %>%
   filter(confirmed != 0)
 ```
+
+```{r afghan-data}
+afghan_data_new <- afghan_data %>% select(iso3c, country, date, confirmed, population) %>% 
+  mutate(lag_confirmed = lag(confirmed, 1),
+         daily_confirmed = case_when(date == "2020-02-24" ~ confirmed,
+                                     date > "2020-02-24" ~ confirmed - lag_confirmed),
+         infection_rate = daily_confirmed / population * 1000000)
+```
+
+
+```{r budge-data}
+budget <- read_csv("data/budget.csv") 
+
+
+budget <- budget %>% mutate(index = gsub('\\D+','', budget$`COFOG based budget`),
+         budget = gsub('\\d+', '', budget$`COFOG based budget`))
+
+budget_new <- budget %>%
+  filter(index %in% c(1:9)) %>%
+  select(-`COFOG based budget`, -index) %>%
+  rename(Budget = budget,
+         "2019" = "1399",
+         "2020" = "1400",
+         "2021" = "1401",
+         "2022" = "1402")
+
+col_order <- c("Budget", "2019", "2020", "2021", "2022")
+
+budget_table<-  budget_new[, col_order]
+```
+
+
+```{r health-data}
+
+health_profile <- read_csv("data/health_profile.csv")
+
+health_facility <- read_csv("data/health_care.csv") %>%
+  filter(Indicators %in% c("Total Number of Hospitals",
+                           "Bed in hospitals (government)"))
+
+health <- rbind(health_profile, health_facility) %>%
+  filter(Indicators != "Male",
+         Indicators != "Female")
+
+```
+
 
 **Analysis Tools**
 
@@ -93,14 +138,11 @@ The analysis is performed using R [@r]. The data is wrangled mainly using the ti
 The confirmed cases data from `tidycovid19` is provided in cumulative-wise, hence I wrangled the data first to get the number of daily cases. 
 
 
-```{r}
-afghan_data_new <- afghan_data %>% select(iso3c, country, date, confirmed, population) %>% 
-  mutate(lag_confirmed = lag(confirmed, 1),
-         daily_confirmed = case_when(date == "2020-02-24" ~ confirmed,
-                                     date > "2020-02-24" ~ confirmed - lag_confirmed),
-         infection_rate = daily_confirmed / population * 1000000)
-```
+```{r afghan-plot}
 
+
+
+```
 
 
 
