@@ -31,6 +31,7 @@ library(DT)
 library(kableExtra)
 library(gghighlight)
 library(crosstalk)
+library(patchwork)
 ```
 
 
@@ -86,14 +87,18 @@ afghan_data <- merged_data %>% filter(iso3c == "AFG") %>%
 ```
 
 ```{r afghan-data}
-afghan_data_new <- afghan_data %>% select(iso3c, country, date, confirmed, population, gcmr_retail_recreation,
+afghan_data_new <- afghan_data %>% select(iso3c, country, date, deaths, confirmed, population, gcmr_retail_recreation,
                                           gcmr_grocery_pharmacy, gcmr_parks, gcmr_transit_stations, gcmr_workplaces,
                                           gcmr_residential) %>% 
   mutate(lag_confirmed = lag(confirmed, 1),
+         lag_deaths = lag(deaths, 1),
          daily_confirmed = case_when(date == "2020-02-24" ~ confirmed,
                                      date > "2020-02-24" ~ confirmed - lag_confirmed),
+         daily_deaths = case_when(date == "2020-02-24" ~ deaths,
+                                     date > "2020-02-24" ~ deaths - lag_deaths),
          infection_rate = daily_confirmed / population * 1000000,
          daily_confirmed_proj = daily_confirmed*10,
+         daily_deaths_proj = daily_deaths*2,
          infection_rate_proj = daily_confirmed_proj/ population * 1000000)
 ```
 
@@ -149,6 +154,77 @@ The analysis is performed using R [@r]. The data is wrangled mainly using the ti
 The confirmed cases data from `tidycovid19` is provided in cumulative-wise, hence I wrangled the data first to get the number of daily cases. 
 
 
+```{r covid-plot-dat}
+
+covid_plot_dat <- afghan_data_new %>%
+  select(date, daily_confirmed, daily_deaths, daily_confirmed_proj, daily_deaths_proj) %>%
+  rename(`confirmed` = daily_confirmed,
+         `deaths` = daily_deaths,
+         `estimated cases` = daily_confirmed_proj,
+         `estimated deaths` = daily_deaths_proj)
+
+covid_plot_dat<- covid_plot_dat %>%
+  pivot_longer(c(2:5),
+               names_to = "indicator",
+               values_to = "number")
+
+```
+
+
+```{r covid-plot}
+
+cols1 <- c("confirmed" = "#FF6961", "estimated cases" = "#FEC8D8")
+
+p1 <- ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "estimated cases")), aes(x=date, y=number, group=indicator)) +
+  geom_line(aes(linetype=indicator, color=indicator)) +
+  theme(legend.position = "bottom",
+        legend.justification='left',
+        legend.direction='horizontal') +
+  scale_y_continuous(breaks = seq(0, 10000, by=1000)) +
+  theme(panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "#D7DBDD"), 
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "grey92"),
+        plot.title.position = "plot",
+        plot.title = element_text(size = 12),
+        plot.margin = margin(10, 10, 10, 10),
+        legend.background = element_rect(fill = "grey92"),
+        legend.title = element_blank())+
+  scale_colour_manual(values = cols1) +
+  ggtitle("A)") +
+  xlab("Date") +
+  ylab("Daily cases") +
+  labs(caption = "Source: JHU CSSE")
+
+
+cols2 <- c("deaths" = "#875C36", "estimated deaths" = "#E1B894")
+p2 <- ggplot(filter(covid_plot_dat, indicator %in% c("deaths", "estimated deaths")), aes(x=date, y=number, group=indicator)) +
+  geom_line(aes(linetype=indicator, color=indicator)) +
+  theme(legend.position = "bottom",
+        legend.justification='left',
+        legend.direction='horizontal',
+        panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "#D7DBDD"), 
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "grey92"),
+        plot.title.position = "plot",
+        plot.title = element_text(size = 12),
+        plot.margin = margin(10, 10, 10, 10),
+        legend.background = element_rect(fill = "grey92"),
+        legend.title = element_blank()) +
+  scale_colour_manual(values = cols2) +
+  ggtitle("B)") +
+  xlab("Date") +
+  ylab("Daily deaths") +
+  labs(caption = "Source: JHU CSSE")
+
+
+p1 + p2 + plot_layout(ncol = 2) 
+
+
+
+  
+```
 
 
 
