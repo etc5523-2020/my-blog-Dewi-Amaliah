@@ -31,7 +31,7 @@ library(DT)
 library(kableExtra)
 library(gghighlight)
 library(crosstalk)
-library(patchwork)
+library(ggrepel)
 ```
 
 
@@ -66,7 +66,11 @@ d-article table th, d-article table td {
 
 Since being declared as a global pandemic by the World Health Organization (WHO) on 12 March 2020, Covid-19 has affected 213 countries, including the conflict-torn country, Afghanistan [@countries]. This country has its first confirmed case recorded on 24 February 2020 in Herat after a citizen who had just returned from Iran contracted with the virus [@firstcase].
 
-Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by the conflict [@ocha]. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 [@vulnerable]. Quoting the the Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA), Tadamichi Yamamoto, "Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence" [@vulnerable]. In other words, the Afghan people are already vulnerable before Covid-19 attacks. 
+Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by the conflict [@ocha]. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 [@vulnerable]. The Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA) said as follows:  
+
+> "Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence" - *Tadamichi Yamamoto* [@vulnerable] 
+
+In other words, the Afghan people are already vulnerable before Covid-19 attacks. 
 
 This article aims to convey the reasons why the conflict made the country might be hit hard by Covid-19. The analysis would be focus on two aspects, namely the health care and the population vulnerability.  
 
@@ -98,7 +102,9 @@ afghan_data_new <- afghan_data %>% select(iso3c, country, date, deaths, confirme
                                      date > "2020-02-24" ~ deaths - lag_deaths),
          infection_rate = daily_confirmed / population * 1000000,
          daily_confirmed_proj = daily_confirmed*10,
+         confirmed_est = confirmed*10,
          daily_deaths_proj = daily_deaths*2,
+         deaths_est = deaths*2,
          infection_rate_proj = daily_confirmed_proj/ population * 1000000)
 ```
 
@@ -157,11 +163,17 @@ The confirmed cases data from `tidycovid19` is provided in cumulative-wise, henc
 ```{r covid-plot-dat}
 
 covid_plot_dat <- afghan_data_new %>%
-  select(date, daily_confirmed, daily_deaths, daily_confirmed_proj, daily_deaths_proj) %>%
-  rename(`confirmed` = daily_confirmed,
-         `deaths` = daily_deaths,
-         `estimated cases` = daily_confirmed_proj,
-         `estimated deaths` = daily_deaths_proj)
+  select(date, confirmed, deaths,
+         daily_confirmed, daily_deaths, daily_confirmed_proj, daily_deaths_proj,
+         confirmed_est, deaths_est) %>%
+  rename(`confirmed` = confirmed,
+         `deaths` = deaths,
+         `estimated cases` = confirmed_est,
+         `estimated deaths` = deaths_est) %>%
+  select(date, `confirmed`,
+         `deaths` ,
+         `estimated cases`,
+         `estimated deaths`)
 
 covid_plot_dat<- covid_plot_dat %>%
   pivot_longer(c(2:5),
@@ -173,14 +185,17 @@ covid_plot_dat<- covid_plot_dat %>%
 
 ```{r covid-plot}
 
-cols1 <- c("confirmed" = "#FF6961", "estimated cases" = "#FEC8D8")
+cols1 <- c("confirmed" = "#FF6961", "deaths" = "#875C36")
 
-p1 <- ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "estimated cases")), aes(x=date, y=number, group=indicator)) +
+data_ends <- filter(covid_plot_dat, indicator %in% c("confirmed", "deaths"),
+                                                     date == "2020-09-15")
+
+ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "deaths")), aes(x=date, y=number, group=indicator)) + 
   geom_line(aes(linetype=indicator, color=indicator)) +
   theme(legend.position = "bottom",
         legend.justification='left',
         legend.direction='horizontal') +
-  scale_y_continuous(breaks = seq(0, 10000, by=1000)) +
+  scale_y_continuous(breaks = seq(0, 40000, by=5000)) +
   theme(panel.grid.major = element_line(size = 0.5, linetype = 'solid',
                                 colour = "#D7DBDD"), 
         panel.grid.minor = element_blank(),
@@ -189,37 +204,43 @@ p1 <- ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "estimated cas
         plot.title = element_text(size = 12),
         plot.margin = margin(10, 10, 10, 10),
         legend.background = element_rect(fill = "grey92"),
-        legend.title = element_blank())+
-  scale_colour_manual(values = cols1) +
-  ggtitle("A)") +
-  xlab("Date") +
-  ylab("Daily cases") +
-  labs(caption = "Source: JHU CSSE")
-
-
-cols2 <- c("deaths" = "#875C36", "estimated deaths" = "#E1B894")
-p2 <- ggplot(filter(covid_plot_dat, indicator %in% c("deaths", "estimated deaths")), aes(x=date, y=number, group=indicator)) +
-  geom_line(aes(linetype=indicator, color=indicator)) +
-  theme(legend.position = "bottom",
-        legend.justification='left',
-        legend.direction='horizontal',
-        panel.grid.major = element_line(size = 0.5, linetype = 'solid',
-                                colour = "#D7DBDD"), 
-        panel.grid.minor = element_blank(),
-        plot.background = element_rect(fill = "grey92"),
-        plot.title.position = "plot",
-        plot.title = element_text(size = 12),
-        plot.margin = margin(10, 10, 10, 10),
-        legend.background = element_rect(fill = "grey92"),
         legend.title = element_blank()) +
-  scale_colour_manual(values = cols2) +
-  ggtitle("B)") +
+  scale_colour_manual(values = cols1) +
+  ggtitle("Cumulative Confirmed Cases and Deaths of Covid-19 in Afghanistan") +
   xlab("Date") +
-  ylab("Daily deaths") +
-  labs(caption = "Source: JHU CSSE")
+  ylab("Cumulative cases in thousand") +
+  labs(caption = "Source: JHU CSSE") +
+  geom_text_repel(
+    aes(label = number), data = data_ends,
+    fontface ="plain", color = "black", size = 3
+    )
 
 
-p1 + p2 + plot_layout(ncol = 2) 
+
+
+#cols2 <- c("deaths" = "#875C36", "estimated deaths" = "#E1B894")
+#p2 <- ggplot(filter(covid_plot_dat, indicator %in% c("deaths", "estimated deaths")), aes(x=date, y=number, group=indicator)) +
+  #geom_line(aes(linetype=indicator, color=indicator)) +
+  #theme(legend.position = "bottom",
+        #legend.justification='left',
+        #legend.direction='horizontal',
+        #panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                #colour = "#D7DBDD"), 
+        #panel.grid.minor = element_blank(),
+        #plot.background = element_rect(fill = "grey92"),
+        #plot.title.position = "plot",
+        #plot.title = element_text(size = 12),
+        #plot.margin = margin(10, 10, 10, 10),
+        #legend.background = element_rect(fill = "grey92"),
+        #legend.title = element_blank()) +
+  #scale_colour_manual(values = cols2) +
+  #ggtitle("B)") +
+  #xlab("Date") +
+  #ylab("Cumulative deaths") +
+  #labs(caption = "Source: JHU CSSE")
+
+
+#p1 + p2 + plot_layout(ncol = 2) 
 
 
 

@@ -1027,7 +1027,11 @@ d-article table th, d-article table td {
 </div>
 <h2 id="introduction">Introduction</h2>
 <p>Since being declared as a global pandemic by the World Health Organization (WHO) on 12 March 2020, Covid-19 has affected 213 countries, including the conflict-torn country, Afghanistan <span class="citation" data-cites="countries">(worldometer <a href="#ref-countries" role="doc-biblioref">2020</a>)</span>. This country has its first confirmed case recorded on 24 February 2020 in Herat after a citizen who had just returned from Iran contracted with the virus <span class="citation" data-cites="firstcase">(Wikipedia <a href="#ref-firstcase" role="doc-biblioref">2020</a>)</span>.</p>
-<p>Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by the conflict <span class="citation" data-cites="ocha">(United Nations Office for the Coordination of Humanitarian Affairs <a href="#ref-ocha" role="doc-biblioref">2020</a>)</span>. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 <span class="citation" data-cites="vulnerable">(United Nations Assistance Mission in Afghanistan <a href="#ref-vulnerable" role="doc-biblioref">2020</a>)</span>. Quoting the the Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA), Tadamichi Yamamoto, “Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence” <span class="citation" data-cites="vulnerable">(United Nations Assistance Mission in Afghanistan <a href="#ref-vulnerable" role="doc-biblioref">2020</a>)</span>. In other words, the Afghan people are already vulnerable before Covid-19 attacks.</p>
+<p>Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid this war-shattered country seems to rub salt into the wound. According to the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) data, as of 6 September 2020, there were already 151,190 people displaced by the conflict <span class="citation" data-cites="ocha">(United Nations Office for the Coordination of Humanitarian Affairs <a href="#ref-ocha" role="doc-biblioref">2020</a>)</span>. Further, in 2019, civilian casualties due to the conflict has surpassed 100,000 <span class="citation" data-cites="vulnerable">(United Nations Assistance Mission in Afghanistan <a href="#ref-vulnerable" role="doc-biblioref">2020</a>)</span>. The Secretary-General’s Special Representative for Afghanistan and head of the UN Assistance Mission in Afghanistan (UNAMA) said as follows:</p>
+<blockquote>
+<p>“Almost no civilian in Afghanistan has escaped being personally affected in some way by the ongoing violence” - <em>Tadamichi Yamamoto</em> <span class="citation" data-cites="vulnerable">(United Nations Assistance Mission in Afghanistan <a href="#ref-vulnerable" role="doc-biblioref">2020</a>)</span></p>
+</blockquote>
+<p>In other words, the Afghan people are already vulnerable before Covid-19 attacks.</p>
 <p>This article aims to convey the reasons why the conflict made the country might be hit hard by Covid-19. The analysis would be focus on two aspects, namely the health care and the population vulnerability.</p>
 <h2 id="data-source">Data Source</h2>
 <p>In doing analysis, I used several data sets from various sources. For the Covid-19 situation in Afghanistan, I used the data of confirmed cases from John Hopkins University Center for System Science and Engineering (JHU CSSE) <span class="citation" data-cites="jhu">(John Hopkins University CSSE <a href="#ref-jhu" role="doc-biblioref">2020</a>)</span> and the population data from the World Bank <span class="citation" data-cites="population">(World Bank <a href="#ref-population" role="doc-biblioref">2020</a>)</span>. I also used the mobility data from Google Covid-19 Community Mobile Report <span class="citation" data-cites="googlecmr">(Google <a href="#ref-googlecmr" role="doc-biblioref">2020</a>)</span> to analyze the population vulnerability. These data have been compiled in the <code>tidycovid19</code> R package by Joachim Gassen <span class="citation" data-cites="tidycovi19">(Gassen <a href="#ref-tidycovi19" role="doc-biblioref">2020</a>)</span>, hence I directly downloaded it from this package. For the health care vulnerability analysis, I mainly used the data of health sector profile from the Afghanistan National Statistics and Information Authority <span class="citation" data-cites="nsia">(National Statistics &amp; Information Authority of Afghanistan <a href="#ref-nsia" role="doc-biblioref">2020</a>)</span> and the government national budget data from the Afghanistan Ministry of Finance <span class="citation" data-cites="mof">(Islamic Republic of Afghanistan Ministry of Finance <a href="#ref-mof" role="doc-biblioref">2019</a>)</span>.</p>
@@ -1069,7 +1073,7 @@ d-article table th, d-article table td {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pxgdnkxvkp .gt_table {
+#jbxguhokmm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1094,7 +1098,7 @@ d-article table th, d-article table td {
   border-left-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_heading {
+#jbxguhokmm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1106,7 +1110,7 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_title {
+#jbxguhokmm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1116,7 +1120,7 @@ d-article table th, d-article table td {
   border-bottom-width: 0;
 }
 
-#pxgdnkxvkp .gt_subtitle {
+#jbxguhokmm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1126,13 +1130,13 @@ d-article table th, d-article table td {
   border-top-width: 0;
 }
 
-#pxgdnkxvkp .gt_bottom_border {
+#jbxguhokmm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_col_headings {
+#jbxguhokmm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1147,7 +1151,7 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_col_heading {
+#jbxguhokmm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1167,7 +1171,7 @@ d-article table th, d-article table td {
   overflow-x: hidden;
 }
 
-#pxgdnkxvkp .gt_column_spanner_outer {
+#jbxguhokmm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1179,15 +1183,15 @@ d-article table th, d-article table td {
   padding-right: 4px;
 }
 
-#pxgdnkxvkp .gt_column_spanner_outer:first-child {
+#jbxguhokmm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pxgdnkxvkp .gt_column_spanner_outer:last-child {
+#jbxguhokmm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pxgdnkxvkp .gt_column_spanner {
+#jbxguhokmm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1199,7 +1203,7 @@ d-article table th, d-article table td {
   width: 100%;
 }
 
-#pxgdnkxvkp .gt_group_heading {
+#jbxguhokmm .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1221,7 +1225,7 @@ d-article table th, d-article table td {
   vertical-align: middle;
 }
 
-#pxgdnkxvkp .gt_empty_group_heading {
+#jbxguhokmm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1236,15 +1240,15 @@ d-article table th, d-article table td {
   vertical-align: middle;
 }
 
-#pxgdnkxvkp .gt_from_md > :first-child {
+#jbxguhokmm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pxgdnkxvkp .gt_from_md > :last-child {
+#jbxguhokmm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pxgdnkxvkp .gt_row {
+#jbxguhokmm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1263,7 +1267,7 @@ d-article table th, d-article table td {
   overflow-x: hidden;
 }
 
-#pxgdnkxvkp .gt_stub {
+#jbxguhokmm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1275,7 +1279,7 @@ d-article table th, d-article table td {
   padding-left: 12px;
 }
 
-#pxgdnkxvkp .gt_summary_row {
+#jbxguhokmm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1285,7 +1289,7 @@ d-article table th, d-article table td {
   padding-right: 5px;
 }
 
-#pxgdnkxvkp .gt_first_summary_row {
+#jbxguhokmm .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1295,7 +1299,7 @@ d-article table th, d-article table td {
   border-top-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_grand_summary_row {
+#jbxguhokmm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1305,7 +1309,7 @@ d-article table th, d-article table td {
   padding-right: 5px;
 }
 
-#pxgdnkxvkp .gt_first_grand_summary_row {
+#jbxguhokmm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1315,11 +1319,11 @@ d-article table th, d-article table td {
   border-top-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_striped {
+#jbxguhokmm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pxgdnkxvkp .gt_table_body {
+#jbxguhokmm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1328,7 +1332,7 @@ d-article table th, d-article table td {
   border-bottom-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_footnotes {
+#jbxguhokmm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1342,13 +1346,13 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_footnote {
+#jbxguhokmm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#pxgdnkxvkp .gt_sourcenotes {
+#jbxguhokmm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1362,46 +1366,46 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#pxgdnkxvkp .gt_sourcenote {
+#jbxguhokmm .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#pxgdnkxvkp .gt_left {
+#jbxguhokmm .gt_left {
   text-align: left;
 }
 
-#pxgdnkxvkp .gt_center {
+#jbxguhokmm .gt_center {
   text-align: center;
 }
 
-#pxgdnkxvkp .gt_right {
+#jbxguhokmm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pxgdnkxvkp .gt_font_normal {
+#jbxguhokmm .gt_font_normal {
   font-weight: normal;
 }
 
-#pxgdnkxvkp .gt_font_bold {
+#jbxguhokmm .gt_font_bold {
   font-weight: bold;
 }
 
-#pxgdnkxvkp .gt_font_italic {
+#jbxguhokmm .gt_font_italic {
   font-style: italic;
 }
 
-#pxgdnkxvkp .gt_super {
+#jbxguhokmm .gt_super {
   font-size: 65%;
 }
 
-#pxgdnkxvkp .gt_footnote_marks {
+#jbxguhokmm .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pxgdnkxvkp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="jbxguhokmm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>Afghanistan Budget Outlook (in Afghan Afghani)</th>
@@ -1508,7 +1512,7 @@ d-article table th, d-article table td {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#mqeripgsqr .gt_table {
+#uvmwzybdrl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1533,7 +1537,7 @@ d-article table th, d-article table td {
   border-left-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_heading {
+#uvmwzybdrl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1545,7 +1549,7 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_title {
+#uvmwzybdrl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1555,7 +1559,7 @@ d-article table th, d-article table td {
   border-bottom-width: 0;
 }
 
-#mqeripgsqr .gt_subtitle {
+#uvmwzybdrl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1565,13 +1569,13 @@ d-article table th, d-article table td {
   border-top-width: 0;
 }
 
-#mqeripgsqr .gt_bottom_border {
+#uvmwzybdrl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_col_headings {
+#uvmwzybdrl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1586,7 +1590,7 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_col_heading {
+#uvmwzybdrl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1606,7 +1610,7 @@ d-article table th, d-article table td {
   overflow-x: hidden;
 }
 
-#mqeripgsqr .gt_column_spanner_outer {
+#uvmwzybdrl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1618,15 +1622,15 @@ d-article table th, d-article table td {
   padding-right: 4px;
 }
 
-#mqeripgsqr .gt_column_spanner_outer:first-child {
+#uvmwzybdrl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mqeripgsqr .gt_column_spanner_outer:last-child {
+#uvmwzybdrl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mqeripgsqr .gt_column_spanner {
+#uvmwzybdrl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1638,7 +1642,7 @@ d-article table th, d-article table td {
   width: 100%;
 }
 
-#mqeripgsqr .gt_group_heading {
+#uvmwzybdrl .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1660,7 +1664,7 @@ d-article table th, d-article table td {
   vertical-align: middle;
 }
 
-#mqeripgsqr .gt_empty_group_heading {
+#uvmwzybdrl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1675,15 +1679,15 @@ d-article table th, d-article table td {
   vertical-align: middle;
 }
 
-#mqeripgsqr .gt_from_md > :first-child {
+#uvmwzybdrl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mqeripgsqr .gt_from_md > :last-child {
+#uvmwzybdrl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mqeripgsqr .gt_row {
+#uvmwzybdrl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1702,7 +1706,7 @@ d-article table th, d-article table td {
   overflow-x: hidden;
 }
 
-#mqeripgsqr .gt_stub {
+#uvmwzybdrl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1714,7 +1718,7 @@ d-article table th, d-article table td {
   padding-left: 12px;
 }
 
-#mqeripgsqr .gt_summary_row {
+#uvmwzybdrl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1724,7 +1728,7 @@ d-article table th, d-article table td {
   padding-right: 5px;
 }
 
-#mqeripgsqr .gt_first_summary_row {
+#uvmwzybdrl .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1734,7 +1738,7 @@ d-article table th, d-article table td {
   border-top-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_grand_summary_row {
+#uvmwzybdrl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1744,7 +1748,7 @@ d-article table th, d-article table td {
   padding-right: 5px;
 }
 
-#mqeripgsqr .gt_first_grand_summary_row {
+#uvmwzybdrl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1754,11 +1758,11 @@ d-article table th, d-article table td {
   border-top-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_striped {
+#uvmwzybdrl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mqeripgsqr .gt_table_body {
+#uvmwzybdrl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1767,7 +1771,7 @@ d-article table th, d-article table td {
   border-bottom-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_footnotes {
+#uvmwzybdrl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1781,13 +1785,13 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_footnote {
+#uvmwzybdrl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#mqeripgsqr .gt_sourcenotes {
+#uvmwzybdrl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1801,46 +1805,46 @@ d-article table th, d-article table td {
   border-right-color: #D3D3D3;
 }
 
-#mqeripgsqr .gt_sourcenote {
+#uvmwzybdrl .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#mqeripgsqr .gt_left {
+#uvmwzybdrl .gt_left {
   text-align: left;
 }
 
-#mqeripgsqr .gt_center {
+#uvmwzybdrl .gt_center {
   text-align: center;
 }
 
-#mqeripgsqr .gt_right {
+#uvmwzybdrl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mqeripgsqr .gt_font_normal {
+#uvmwzybdrl .gt_font_normal {
   font-weight: normal;
 }
 
-#mqeripgsqr .gt_font_bold {
+#uvmwzybdrl .gt_font_bold {
   font-weight: bold;
 }
 
-#mqeripgsqr .gt_font_italic {
+#uvmwzybdrl .gt_font_italic {
   font-style: italic;
 }
 
-#mqeripgsqr .gt_super {
+#uvmwzybdrl .gt_super {
   font-size: 65%;
 }
 
-#mqeripgsqr .gt_footnote_marks {
+#uvmwzybdrl .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="mqeripgsqr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="uvmwzybdrl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>Health Care Profile of Afghanistan 2017-2019</th>
