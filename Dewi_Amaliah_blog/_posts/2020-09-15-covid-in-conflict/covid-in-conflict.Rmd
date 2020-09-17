@@ -24,10 +24,13 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(tidycovid19)
 library(plotly)
-library(emojifont)
 library(hrbrthemes)
 library(waffle)
-library(extrafont)
+library(gt)
+library(DT)
+library(kableExtra)
+library(gghighlight)
+library(crosstalk)
 ```
 
 
@@ -83,11 +86,15 @@ afghan_data <- merged_data %>% filter(iso3c == "AFG") %>%
 ```
 
 ```{r afghan-data}
-afghan_data_new <- afghan_data %>% select(iso3c, country, date, confirmed, population) %>% 
+afghan_data_new <- afghan_data %>% select(iso3c, country, date, confirmed, population, gcmr_retail_recreation,
+                                          gcmr_grocery_pharmacy, gcmr_parks, gcmr_transit_stations, gcmr_workplaces,
+                                          gcmr_residential) %>% 
   mutate(lag_confirmed = lag(confirmed, 1),
          daily_confirmed = case_when(date == "2020-02-24" ~ confirmed,
                                      date > "2020-02-24" ~ confirmed - lag_confirmed),
-         infection_rate = daily_confirmed / population * 1000000)
+         infection_rate = daily_confirmed / population * 1000000,
+         daily_confirmed_proj = daily_confirmed*10,
+         infection_rate_proj = daily_confirmed_proj/ population * 1000000)
 ```
 
 
@@ -117,15 +124,19 @@ budget_table<-  budget_new[, col_order]
 
 health_profile <- read_csv("data/health_profile.csv")
 
-health_facility <- read_csv("data/health_care.csv") %>%
+health_facility <- read_csv("data/health_care.csv")%>%
   filter(Indicators %in% c("Total Number of Hospitals",
-                           "Bed in hospitals (government)"))
+                           "Bed in hospitals (government)",
+                           "Bed  per ten thousand person",
+                           "Doctors per ten thousand person"))
 
 health <- rbind(health_profile, health_facility) %>%
   filter(Indicators != "Male",
          Indicators != "Female")
 
 ```
+
+<br>
 
 
 **Analysis Tools**
@@ -138,11 +149,6 @@ The analysis is performed using R [@r]. The data is wrangled mainly using the ti
 The confirmed cases data from `tidycovid19` is provided in cumulative-wise, hence I wrangled the data first to get the number of daily cases. 
 
 
-```{r afghan-plot}
-
-
-
-```
 
 
 
@@ -150,6 +156,69 @@ The confirmed cases data from `tidycovid19` is provided in cumulative-wise, henc
 ## Why it could be worse?
 
 **Health Care Vulnerability**
+
+
+```{r budget-plot-dat}
+budget_plot_dat <- budget_table %>%
+  select(Budget, `2020`) %>%
+  mutate(percent_budget = round(`2020`/sum(`2020`)*100, 2))
+```
+
+```{r}
+budget_plot <- ggplot(budget_plot_dat) +
+  geom_col(aes(x= percent_budget, y = reorder(Budget, percent_budget)), fill = "#009bda") +
+  ylab("") +
+  xlab("") +
+  geom_text(aes(x= percent_budget, y= reorder(Budget, percent_budget), label = percent_budget, hjust = -0.1)) +
+  theme_void()+
+  theme(axis.text.y = element_text(size = 8.5, color = "black", hjust = 1),
+        plot.title.position = "plot",
+        plot.title = element_text(size = 12)) +
+  ggtitle("Afghanistan Budget Plan for 2020 (%)") +
+  labs(caption = "Source: Afghansitan Ministry of Finance") +
+  gghighlight(percent_budget == 4.4)
+
+budget_plot
+
+```
+
+<details><summary> Expand here if you want to see the detailed number of the budget </summary>
+
+```{r}
+
+gt(budget_table) %>%
+  tab_header(title = md("Afghanistan Budget Outlook (in Afghan Afghani)")) %>%
+  fmt_number(columns = starts_with("20"), suffixing = TRUE) %>%
+  tab_footnote(
+    footnote = "Budget plan",
+    locations = cells_column_labels(c("2020", "2021", "2022")))
+  
+
+```
+
+</details>
+
+<br>
+
+```{r}
+
+health_table <- health %>%
+  filter(Indicators %in% c("Number of  doctors",
+                           "Number of Health Associate Professional",
+                           "Number of  beds in public hospitals",
+                           "Total Number of Hospitals",
+                           "Bed  per ten thousand person",
+                           "Doctors per ten thousand person")) 
+
+gt(health_table) %>%
+  tab_header(title = md("Health Care Profile of Afghanistan 2017-2019")) %>%
+  tab_source_note(source_note = md("Source: Afghanistan Statistical Year Book 2019, NSIA, page 131-132")) %>%
+  tab_style(style = list(cell_fill(color = "#a0d0de")),
+    locations = cells_body(
+      columns = vars(`2019`),
+      rows = `2019` <= 5)) 
+
+```
 
 
 
@@ -160,6 +229,76 @@ The confirmed cases data from `tidycovid19` is provided in cumulative-wise, henc
 
 
 **Population Vulnerability**
+
+
+```{r}
+mobility <- afghan_data_new %>%
+  select(date,
+         gcmr_grocery_pharmacy,
+         gcmr_retail_recreation,
+         gcmr_parks,
+         gcmr_residential,
+         gcmr_transit_stations,
+         gcmr_workplaces) %>%
+  rename(`grocery and pharmacy` = gcmr_grocery_pharmacy,
+         `retail and recreation` = gcmr_retail_recreation,
+         `parks` = gcmr_parks,
+         `residential` = gcmr_residential,
+         `transit station` = gcmr_transit_stations,
+         `workplaces` = gcmr_workplaces) %>%
+  pivot_longer(c(2:7), names_to = "gmcr", values_to = "index")
+```
+
+
+
+```{r int-plot, eval = FALSE}
+
+# declare `city` as the SQL 'query by' column
+tx <- highlight_key(mobility, ~gmcr)
+
+# initiate a plotly object
+base <- plot_ly(tx, color = I("black")) %>% 
+  group_by(gmcr)
+
+# create a time series of median house price
+base %>%
+  group_by(gmcr) %>%
+  add_lines(x = ~date, y = ~index) %>%
+  highlight(
+  on = "plotly_click",
+  selectize = TRUE, 
+  dynamic = TRUE, 
+  persistent = TRUE
+)
+```
+
+
+```{r}
+ggplot(transform(mobility,
+      gmcr=factor(gmcr,levels=c("grocery and pharmacy",
+                                "retail and recreation",
+                                "parks",
+                                "residential",
+                                "transit station",
+                                "workplaces")))) +
+  geom_line(aes(x = date,
+                y = index,
+                colour = gmcr)) +
+  facet_wrap(~gmcr) +
+  theme(legend.position = "none",
+        panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "#D7DBDD"), 
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "grey92"),
+        plot.title.position = "plot",
+        plot.title = element_text(size = 12),
+        plot.margin = margin(10, 10, 10, 10)) +
+  labs(x = "Date",
+       y = "Google Mobility Index",
+       caption = "Source: Google Community Mobility Report") +
+  ggtitle("Google Mobility Index by Place in Afghanistan")
+```
+
 
 ## Conclusion
 
