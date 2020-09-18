@@ -14,7 +14,7 @@ bibliography: references2.bib
 categories:
   - COVID-19
   - Data Analysis
-draft: TRUE
+draft: FALSE
 preview: war.jpg
 ---
 
@@ -147,8 +147,6 @@ health <- rbind(health_profile, health_facility) %>%
          Indicators != "Female")
 
 ```
-
-<br>
 
 
 **Analysis Tools**
@@ -340,7 +338,7 @@ health_table <- health %>%
                            "Doctors per ten thousand person")) 
 
 gt(health_table) %>%
-  tab_header(title = md("Health Care Profile of Afghanistan 2017-2019")) %>%
+  tab_header(title = md("Table 1. Health Care Profile of Afghanistan 2017-2019")) %>%
   tab_source_note(source_note = md("Source: Afghanistan Statistical Year Book 2019, NSIA, page 131-132")) %>%
   tab_style(style = list(cell_fill(color = "#a0d0de")),
     locations = cells_body(
@@ -440,7 +438,6 @@ The poverty as the result of conflict made Afghans have no choice but to survive
 The country's prolonged conflict has fueled the flames of the pandemic. It resulted in substandard health care and poor communities. The current health care capacity in Afghanistan might not be able to handle many patients amid the pandemic. Meanwhile, poverty leaves Afghanistan with no choice but to make a living, even though it is risky.
 
 A quote from Bertrand Russel was true that war doesn't determine who's right, but who's left.
-
 
 ## Acknowledgments {.appendix}
 

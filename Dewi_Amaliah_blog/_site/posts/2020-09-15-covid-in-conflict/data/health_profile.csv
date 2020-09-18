@@ -1,0 +1,13 @@
+Indicators,Unit,2017,2018,2019
+Number of  doctors,Person,"8,744","8,216","8,082"
+Male,Person,"7,026","6,397","6,351"
+Female,Person,"1,718","1,819","1,731"
+Number of Health Associate Professional,Person,"19,743","21,322","20,988"
+Male,Person,"11,771","13,623","13,670"
+Female,Person,"7,972","7,699","7,318"
+Number of  beds in public hospitals,Bed,"15,122","14,707","14,511"
+Measles covarage,Percent,74,81,72
+Prevalence of tuberculosis,per 100000,70,72,82
+Number of TB events with positive,case,"20,841","22,946","26,393"
+Malaria cases,per 100000,534,532,385
+Registred  HIV Positive cases,Case,"2,549","2,689","2,923"
