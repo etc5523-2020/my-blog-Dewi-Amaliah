@@ -1,7 +1,7 @@
 ---
 title: "Covid and Conflict: Why the pandemic could be worse in Afghanistan?"
 description: |
-  This article aims to convey the reason why the conflicted country, in this case is Afghanistan, might be hit hard by Covid-19.
+  This article aims to convey the reason why the conflicted country, in this case is Afghanistan, might be hit harder by Covid-19.
 author:
   - name: Dewi Lestari Amaliah
     url: {}
@@ -32,6 +32,7 @@ library(kableExtra)
 library(gghighlight)
 library(crosstalk)
 library(ggrepel)
+library(scales)
 ```
 
 
@@ -72,12 +73,12 @@ Viruses are indeed indiscriminate. Unfortunately, the presence of Covid-19 amid 
 
 In other words, the Afghan people are already vulnerable before Covid-19 attacks. 
 
-This article aims to convey the reasons why the conflict made the country might be hit hard by Covid-19. The analysis would be focus on two aspects, namely the health care and the population vulnerability.  
+This article aims to convey the reasons why the conflict brings the pandemic getting worse in Afghanistan. The analysis would be focused on two aspects, namely health care and population vulnerability.  
 
 
 ## Data Source
 
-In doing analysis, I used several data sets from various sources. For the Covid-19 situation in Afghanistan, I used the data of confirmed cases from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu] and the population data from the World Bank [@population]. I also used the mobility data from Google Covid-19 Community Mobile Report [@googlecmr] to analyze the population vulnerability. These data have been compiled in the `tidycovid19` R package by Joachim Gassen [@tidycovi19], hence I directly downloaded it from this package. For the health care vulnerability analysis, I mainly used the data of health sector profile from the Afghanistan National Statistics and Information Authority [@nsia] and the government national budget data from the Afghanistan Ministry of Finance [@mof].  
+In doing analysis, I used several data sets from various sources. For the Covid-19 situation in Afghanistan, I used the data of confirmed cases and deaths from John Hopkins University Center for System Science and Engineering (JHU CSSE) [@jhu] and the population data from the World Bank [@population]. I also used the mobility data from Google Covid-19 Community Mobile Report [@googlecmr] to analyze the population vulnerability. These data have been compiled in the `tidycovid19` R package by Joachim Gassen [@tidycovi19], hence I directly downloaded it from this package. For the health care vulnerability analysis, I mainly used the data of health sector profile from the Afghanistan National Statistics and Information Authority [@nsia] and the government national budget data from the Afghanistan Ministry of Finance [@mof].  
 
 
 ```{r covid-data}
@@ -157,7 +158,8 @@ The analysis is performed using R [@r]. The data is wrangled mainly using the ti
 
 ## Covid-19 Cases in Afghanistan
 
-The confirmed cases data from `tidycovid19` is provided in cumulative-wise, hence I wrangled the data first to get the number of daily cases. 
+
+To analyze the Covid-19 situation in Afghanistan, I used the cumulative numbers of confirmed cases and deaths. It is because I only want to see the general condition of Covid-19 in this country.
 
 
 ```{r covid-plot-dat}
@@ -183,14 +185,16 @@ covid_plot_dat<- covid_plot_dat %>%
 ```
 
 
-```{r covid-plot}
+<center>
+
+```{r covid-plot, fig.cap= "COVID-19 confirmed cases and deaths in Afghanistan 24 February to 15 September 2020"}
 
 cols1 <- c("confirmed" = "#FF6961", "deaths" = "#875C36")
 
 data_ends <- filter(covid_plot_dat, indicator %in% c("confirmed", "deaths"),
                                                      date == "2020-09-15")
 
-ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "deaths")), aes(x=date, y=number, group=indicator)) + 
+covid_plot <- ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "deaths")), aes(x=date, y=number, group=indicator)) + 
   geom_line(aes(linetype=indicator, color=indicator)) +
   theme(legend.position = "bottom",
         legend.justification='left',
@@ -214,8 +218,6 @@ ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "deaths")), aes(x=da
     aes(label = number), data = data_ends,
     fontface ="plain", color = "black", size = 3
     )
-
-
 
 
 #cols2 <- c("deaths" = "#875C36", "estimated deaths" = "#E1B894")
@@ -242,15 +244,40 @@ ggplot(filter(covid_plot_dat, indicator %in% c("confirmed", "deaths")), aes(x=da
 
 #p1 + p2 + plot_layout(ncol = 2) 
 
-
+covid_plot
 
   
 ```
+</center>
 
 
+
+
+```{r}
+last_data_conf <- filter(covid_plot_dat, indicator == "confirmed" & date == "2020-09-15")
+last_conf <- last_data_conf$number
+
+last_data_deaths <- filter(covid_plot_dat, indicator == "deaths" & date == "2020-09-15")
+last_deaths <- last_data_deaths$number
+
+infection_rate <- round(last_conf / afghan_data_new$population[1] * 1000000, 2)
+fatality_rate <- round(last_deaths/last_conf*100, 2)
+```
+
+
+Figure \@ref(fig:covid-plot) shows that until 15 September 2020, the number of Covid-19 cases in Afghanistan has reached `r comma(last_conf)`, or equivalent to `r infection_rate` cases per one million population. We can also see that the curve flattened. 
+
+Regarding the death case, as of 15 September 2020, the number is `r comma(last_deaths)` with `r fatality_rate` percent of case fatality rate. However, we could not conclude anything from this indicator because the WHO said that the fatality rate varies in each country from 0.1% to more than 25%. The calculation method is also still rough [@roughdata]. 
+
+If we only look at the confirmed case number, we might conclude that Afghanistan has handled this pandemic well, given the evidence that the curve started to flatten. However, how reliable is the data? Of course, we cannot see this indicator alone. We also have to take other indicators into account, namely the testing rate and the positive rate. Unfortunately, it is tough to find Afghanistan's data for these indicators. [Our World In Data](https://ourworldindata.org/coronavirus-testing), the source of testing data in `tidycovid19` package also does not have this indicator data for Afghanistan.
+
+Further, according to the WHO, the actual rate of transmission is mostly underestimated since the disease is sometimes asymptomatic [@roughdata]. The low testing capacity in the country then exacerbated the situation. According to Nicholas Bishop, an expert of the United Nations International Organization for Migration (IOM), as per June 2020, Afghanistan only held 646 tests per million population, bringing it to be one of the countries with lowest testing in the world [@bishop]. He also added that the true cases of Covid-19 in Afghanistan could be millions since there is a significant level of community transmissions across 34 provinces. Similarly, a survey conducted by KabulNow concluded that the actual cases in Kabul could be ten times more than the official record [@kabulnow]. 
 
 
 ## Why it could be worse?
+
+Assuming that the actual cases much higher than the official record, we could see an already bad situation in this war-torn country. Unfortunately, as I mentioned in the introduction, Afghan people are already miserable enough because of the prolonged conflict of the past 18 years. Hence in this part, I would emphasize the conflict effects that made the pandemic worse in this country. 
+
 
 **Health Care Vulnerability**
 
