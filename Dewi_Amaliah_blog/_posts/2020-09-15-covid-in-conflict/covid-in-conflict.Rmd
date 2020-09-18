@@ -279,6 +279,7 @@ Further, according to the WHO, the actual rate of transmission is mostly underes
 Assuming that the actual cases are much higher than the official record, we could see an already bad situation in this war-torn country. Unfortunately, as I mentioned in the introduction, Afghan people are already miserable enough because of the conflict. Hence in this part, I would emphasize the conflict effects that made the pandemic worse in this country. 
 
 
+
 **Health Care Vulnerability**
 
 The prolonged conflict in the past 18 years in Afghanistan has shifted the government focus to defense and safety affairs. Figure \@ref(fig:budget-plot) suggests that more than 40 percent of the government’s budget plan in 2020 is for defense and public order and safety. The fund for public health only accounts for 4.4 percent, much lower than the other budget.
@@ -302,7 +303,7 @@ budget_plot <- ggplot(budget_plot_dat) +
         plot.title.position = "plot",
         plot.title = element_text(size = 12)) +
   ggtitle("Afghanistan Budget Plan for 2020 (%)") +
-  labs(caption = "Source: Afghansitan Ministry of Finance") +
+  labs(caption = "Source: Afghanistan Ministry of Finance") +
   gghighlight(percent_budget == 4.4)
 
 budget_plot
@@ -353,8 +354,6 @@ Further the health care facility in Afghanistan could be considered as inappropr
 
 This reality is even more bitter because health facilities and their workers are often the targets of non-state armed groups. According to the UN Assistance Mission in Afghanistan report, 12 deliberate attacks on health care have happened during the pandemic [@DeviSharmila2020Athc]. One of them was carried out by armed men who attacked Dasht-e-Barchi hospital in Kabul on 12 May 2020. This attack killed 24 people, including 16 women and two babies. After this incident, Médecins Sans Frontières (MSF), a medical humanitarian organization, stopped its activities at this hospital, which means that one health facility was depleted, even though the need is increasing due to the pandemic.
 
-
-<br>
 
 **Economic Vulnerability**
 
@@ -436,13 +435,21 @@ The poverty as the result of conflict made Afghans have no choice but to survive
 
 ## Conclusion
 
+`r comma(last_conf)` of COVID-19 cases in Afghanistan up to 15 September 2020 are assumed to be only the iceberg's tip as this country has a low testing rate.
+
+The country's prolonged conflict has fueled the flames of the pandemic. It resulted in substandard health care and poor communities. The current health care capacity in Afghanistan might not be able to handle many patients amid the pandemic. Meanwhile, poverty leaves Afghanistan with no choice but to make a living, even though it is risky.
+
+A quote from Bertrand Russel was true that war doesn't determine who's right, but who's left.
+
+
 ## Acknowledgments {.appendix}
+
+The website and the blog post was created using  `R` `distill` package by JJ Allaire, Rich Iannone, and Yihui Xie. 
 
 <span>The preview photo by <a href="https://unsplash.com/@kingmaphotos?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jeff Kingma</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 
-- Distill
 
-- Google Translate
+The translation for Parsi Languange to English of a reference article [@kabulnow] in this article used Google Translate.
 
 
 
