@@ -23,14 +23,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
 library(tidycovid19)
-library(plotly)
-library(hrbrthemes)
-library(waffle)
+#library(plotly)
+#library(hrbrthemes)
+#library(waffle)
 library(gt)
-library(DT)
-library(kableExtra)
+#library(DT)
+#library(kableExtra)
 library(gghighlight)
-library(crosstalk)
+#library(crosstalk)
 library(ggrepel)
 library(scales)
 ```
@@ -153,7 +153,7 @@ health <- rbind(health_profile, health_facility) %>%
 
 **Analysis Tools**
 
-The analysis is performed using R [@r]. The data is wrangled mainly using the tidyverse function [@tidyverse]. Further, the data is visualized using the function in `ggplot2` [@ggplot2], plotly [@plotly] and `waffle` [@waffle].
+The analysis is performed using R [@r]. The data is wrangled mainly using the tidyverse function [@tidyverse]. Further, the data is visualized using the function in `ggplot2` [@ggplot2], `gghighlight` [@gghighlight] and `ggrepel` [@ggrepel]. I also used `gt` [@gt] and and `scales` [@scales].
 
 
 ## COVID-19 Cases in Afghanistan
@@ -289,6 +289,7 @@ budget_plot_dat <- budget_table %>%
   mutate(percent_budget = round(`2020`/sum(`2020`)*100, 2))
 ```
 
+<center>
 ```{r budget-plot, fig.cap = "Afghanistan's plan of budget distribution in 2020"}
 
 budget_plot <- ggplot(budget_plot_dat) +
@@ -307,6 +308,7 @@ budget_plot <- ggplot(budget_plot_dat) +
 budget_plot
 
 ```
+</center>
 
 <details><summary> Expand here if you want to see the detailed number of the budget </summary>
 
@@ -357,8 +359,10 @@ This reality is even more bitter because health facilities and their workers are
 **Economic Vulnerability**
 
 
+Conflict does affect not only health care but also the economy. Afghanistan is one of the world's poorest countries, and the perpetuated civil war is the culprit [@wikipoverty] and [@xinhuanet].  Even before COVID-19 strikes, Afghans lived with an average income of less than 2 US dollars a day [@DeviSharmila2020Athc]. With this poverty level, the government will find it challenging to continue to apply the restriction that has been going on since early March [@worldbankpov]. If this happened, there would be a new threat, a hunger [@guardian]. 
 
-```{r}
+
+```{r mob-data}
 mobility <- afghan_data_new %>%
   select(date,
          gcmr_grocery_pharmacy,
@@ -375,8 +379,6 @@ mobility <- afghan_data_new %>%
          `workplaces` = gcmr_workplaces) %>%
   pivot_longer(c(2:7), names_to = "gmcr", values_to = "index")
 ```
-
-
 
 ```{r int-plot, eval = FALSE}
 
@@ -399,8 +401,9 @@ base %>%
 )
 ```
 
+<center>
+```{r mob-data-plot, fig.cap= "Community mobility index in Afghanistan amid COVID-19"}
 
-```{r}
 ggplot(transform(mobility,
       gmcr=factor(gmcr,levels=c("grocery and pharmacy",
                                 "retail and recreation",
@@ -425,7 +428,11 @@ ggplot(transform(mobility,
        caption = "Source: Google Community Mobility Report") +
   ggtitle("Google Mobility Index by Place in Afghanistan")
 ```
+</center>
 
+We can infer from Figure \@ref(fig:mob-data-plot) that when the restriction was implemented, there was a decrease in community mobility almost in every place. However, in early July, the mobility to grocery and pharmacy, as well as retails and recreation, has increased again. It is because most of the population works as shopkeepers, street or retail sales, or daily labor in construction, agriculture, or personal services.
+
+The poverty as the result of conflict made Afghans have no choice but to survive. That being said, returning to work amid a pandemic will undoubtedly increase the risk of being infected by COVID-19.
 
 ## Conclusion
 
