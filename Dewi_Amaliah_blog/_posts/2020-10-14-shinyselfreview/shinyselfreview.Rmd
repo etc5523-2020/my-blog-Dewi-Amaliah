@@ -1,0 +1,33 @@
+---
+title: "COVID19-EUxplorer: A self reflection"
+description: |
+  This article aims to review my very first Shiny App "COVID19-EUxplorer". It would be mostly about a note to my future self in order to make a better app. However, I hope that you can learn something from this review too.
+author:
+  - name: Dewi Lestari Amaliah
+    url: {}
+date: 10-14-2020
+output:
+  distill::distill_article:
+    self_contained: false
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r prev-image, preview = TRUE}
+knitr::include_graphics("shiny_gif/prev_image.png")
+```
+
+
+
+
+
+
+```{r}
+knitr::include_graphics("shiny_gif/tab_1.gif")
+```
+
+
+
