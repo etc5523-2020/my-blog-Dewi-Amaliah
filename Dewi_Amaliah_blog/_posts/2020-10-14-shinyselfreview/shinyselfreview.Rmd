@@ -1,7 +1,7 @@
 ---
 title: "COVID19-EUxplorer"
 description: |
-  A self-reflection of my first Shiny app, **COVID19-EUxplorer**
+  A self-reflection of my first Shiny app, **COVID19-EUxplorer**.
 author:
   - name: Dewi Lestari Amaliah
     url: {}
@@ -42,24 +42,102 @@ html, body, p {
 *The sky is only the limit*. It might sound hyperbolic, but this is what I would say when talking about R and all of its packages. In other words, I would say that you basically can make anything straight from R, from a report, a gif image, a presentation slides, a letter,  even a website, not to mention the statistical analysis, from the basic to the sophisticated one. 
 
 
-
-
 In this article, I would like to discuss an interactive web app that I made with one of its packages, [Shiny](https://shiny.rstudio.com/). The discussion would be about the app itself and a self-review about the app. I developed this app as part of ETC5523 Communicating with Data assignment, one of the core units in the [Master of Business Analytics program](https://www.monash.edu/study/courses/find-a-course/2021/business-analytics-b6022?gclid=CjwKCAjww5r8BRB6EiwArcckC1oGdcqoRx9Uc8Pe3wqknW1rRa7GJ6VnTdCAddOlXoslHPw9ojQhrxoCIjAQAvD_BwE&international=true), Monash University. 
-
 
 ```{r prev-image, fig.cap="The landing page of the app", preview = TRUE}
 knitr::include_graphics("shiny_gif/prev_image.png")
 ```
 
+<h2> `r fontawesome::fa("chart-line", fill = "#117A65")` <span style="color:#117A65"> <strong> About the app </strong> </span> </h2>
 
+I named the app COVID19-EUxplorer: a COVID-19 in Europe Data Explorer. The reason I made a data explorer app is because data is essential in the fight against COVID-19. It helps governments and health sector authorities to measure policy. It can even help us, as part of the community, understand the current situation, and how we can play a role, hand in hand, to prevent the wider transmission. Hence, the aim of this app is a tool to explore the data of COVID-19 related variables in various countries in Europe. 
 
-
-
-
-
-```{r}
-knitr::include_graphics("shiny_gif/tab_1.gif")
+```{r my-shiny, fig.cap = "The overview of the app"}
+knitr::include_graphics("shiny_gif/my_shiny.gif")
 ```
 
 
+This app comprises of seven tabs as follows:
+
+<p> `r fontawesome::fa("home", fill = "#117A65")` <span style="color:#117A65"> <strong> Home tab </strong> </span> </p>
+
+The content of Home tab or the landing page as we can see in Figure \@ref(fig:prev-image) is a very brief overview of the app. It also urges the user to explore the app through the tabs. 
+
+<p> `r fontawesome::fa("chart-bar", fill = "#117A65")` <span style="color:#117A65"> <strong> Cases and Deaths tab </strong> </span> </p>
+
+This tab aims to visualize the cases and deaths of COVID-19 in 51 countries in Europe in daily and cumulative figure. Further, the users are allowed to choose the indicators they want to display: 1. Cases; 2. Cases per 10,000 population; 3. Deaths; and 4. Deaths per 10,000 population. The users also can compare between countries and choose the time range they want. 
+
+<details><summary> See the tab here </summary>
+
+```{r tab-1, fig.cap = "The display of Cases and Deaths tab"}
+knitr::include_graphics("shiny_gif/tab_1.gif")
+```
+
+</details>
+
+<br>
+
+<p> `r fontawesome::fa("vials", fill = "#117A65")` <span style="color:#117A65"> <strong> Testing tab </strong> </span> </p>
+
+This tab aims to visualize of testing and positivity rate of COVID-19 for country members of the European Union (EU)/European Economic Area (EEA) and the United Kingdom weekly. Just like the previous tab, the users are also allowed to choose multiple countries and week range. The plots also come with a benchmark line, i.e., the recommended testing and positivity rate for each corresponding chart. 
+
+<details><summary> See the tab here </summary>
+
+```{r tab-2, fig.cap = "The display of Testing tab"}
+knitr::include_graphics("shiny_gif/tab_2.gif")
+```
+
+</details>
+<br>
+
+<p> `r fontawesome::fa("route", fill = "#117A65")` <span style="color:#117A65"> <strong> Tracing tab </strong> </span> </p>
+
+This tab aims to explore the tracing of COVID-19 for country members of the EU / EEA and the United Kingdom. The tracing indicator is approached with the dominant transmission in each country. In this tab, the users can only choose one country. However, they are still able to compare the dominant transmission from week to week. Apart from selecting a country via the dropdown button, users can also set a country by clicking the map's bubble. The bubble size reflects the rate of COVID-19 cases per 10,000 people. Hence, in choosing the country for exploration, the users can use this map as a benchmark.
+
+<details><summary> See the tab here </summary>
+
+```{r tab-3, fig.cap = "The display of Tracing tab"}
+knitr::include_graphics("shiny_gif/tab_3.gif")
+```
+</details>
+<br>
+
+<p> `r fontawesome::fa("route", fill = "#117A65")` <span style="color:#117A65"> <strong> Community Mobility tab </strong> </span> </p>
+
+This tab aims to explore the mobility of people during the pandemic in six types of locations daily. The users are allowed to choose a country to be displayed. The users also can choose the time range. I also added an interactive table of country response measure, which shows the start date and the end date of a measure. Since community mobility is developed to observe the effect of measure to the community activity, this table is useful as a benchmark of choosing the date to track that effect. 
+
+<details><summary> See the tab here </summary>
+
+```{r tab-4, fig.cap = "The display of Community Mobility tab"}
+knitr::include_graphics("shiny_gif/tab_4.gif")
+```
+
+</details>
+<br>
+
+<p> `r fontawesome::fa("table", fill = "#117A65")` <span style="color:#117A65"> <strong> Data tab </strong> </span> </p>
+
+This tab displays the raw data that are used to visualize the variables in the previous tabs. The users are allowed to choose one or more countries, even select all of the countries available. They are also allowed to choose the time range. 
+
+<details><summary> See the tab here </summary>
+```{r tab-5, fig.cap = "The display of Data tab"}
+knitr::include_graphics("shiny_gif/tab_5.gif")
+```
+</details>
+<br>
+
+<p> `r fontawesome::fa("info-circle", fill = "#117A65")` <span style="color:#117A65"> <strong> More tab </strong> </span> </p>
+
+This tab has two sub-tabs: About and References. The About sub-tab specifies the purpose of the app and other relevant information, such as the data source used in the app and the R packages to make the app. I also wrote a brief information about my self as the creator of the app. The References sub-tab conveys the reference of data sources, readings, packages, and images used in the app.
+
+<details><summary> See the tab here </summary>
+```{r more-tab, fig.cap = "The display of More tab"}
+
+knitr::include_graphics("shiny_gif/more.gif")
+
+```
+</details>
+<br>
+
+<h2> `r fontawesome::fa("book-reader", fill = "#117A65")` <span style="color:#117A65"> <strong> Self Review </strong> </span> </h2>
 
