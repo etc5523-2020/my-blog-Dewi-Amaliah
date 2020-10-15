@@ -9,10 +9,12 @@
     <generator>Distill</generator>
     <lastBuildDate>Wed, 14 Oct 2020 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>COVID19-EUxplorer: A self reflection</title>
+      <title>COVID19-EUxplorer</title>
       <dc:creator>Dewi Lestari Amaliah</dc:creator>
       <link>https://datain360.com/posts/2020-10-14-shinyselfreview</link>
-      <description>This article aims to review my very first Shiny App "COVID19-EUxplorer". It would be mostly about a note to my future self in order to make a better app. However, I hope that you can learn something from this review too.</description>
+      <description>&lt;span style="color:#117A65"&gt; A self-reflection of my first Shiny app, **COVID19-EUxplorer**. &lt;/span&gt;</description>
+      <category>COVID-19</category>
+      <category>Shiny App</category>
       <guid>https://datain360.com/posts/2020-10-14-shinyselfreview</guid>
       <pubDate>Wed, 14 Oct 2020 00:00:00 +0000</pubDate>
       <media:content url="https://datain360.com/posts/2020-10-14-shinyselfreview/shiny_gif/prev_image.png" medium="image" type="image/png" width="1439" height="837"/>
