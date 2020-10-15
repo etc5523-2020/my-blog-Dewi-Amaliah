@@ -10,7 +10,7 @@ bibliography: reference.bib
 output:
   distill::distill_article:
     self_contained: false
-draft: true
+draft: false
 categories:
   - COVID-19
   - Shiny App
