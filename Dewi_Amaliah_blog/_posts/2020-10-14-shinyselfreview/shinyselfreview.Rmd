@@ -194,7 +194,7 @@ That said, I realized that this app has still had some weaknesses. Some weakness
 - Last but not least, I should have given a comma separation to the population column in the data tables. Hence, the population figure would be more readable. 
 
 
-<p> <span style="color:#117A65"> <strong> App goals </strong> </span> </p>
+<p> <span style="color:#117A65"> <strong> Current implausible improvement and the future goals </strong> </span> </p>
 
 The goal of this app in the future is an automatically updated data in the weekly testing and positivity rate and the weekly dominant transmission variables. The current app needs manual data feeding since the file name of the data in the European Centre of Disease Control and Prevention (ECDC) website, the data source of these variables, is always changed every time they update the data. Thus, the URL read code in R would not work in this case. 
 
