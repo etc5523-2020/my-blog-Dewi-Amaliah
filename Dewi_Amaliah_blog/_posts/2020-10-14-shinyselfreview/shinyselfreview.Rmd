@@ -1,7 +1,7 @@
 ---
 title: "COVID19-EUxplorer"
 description: |
-  <span style="color:#117A65"> A self-reflection of my first Shiny app, **COVID19-EUxplorer**. </span>
+  A self-reflection of my first Shiny app, COVID19-EUxplorer.
 author:
   - name: Dewi Lestari Amaliah
     url: {}
