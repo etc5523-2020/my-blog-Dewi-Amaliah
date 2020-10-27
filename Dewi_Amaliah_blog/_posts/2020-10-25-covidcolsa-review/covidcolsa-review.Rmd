@@ -1,0 +1,112 @@
+---
+title: "Get to Know covidcolsa"
+description: |
+  This article aims to introduce and review an R package called "covidcolsa".
+author:
+  - name: Dewi Lestari Amaliah
+    url: {}
+date: 10-25-2020
+bibliography: reference.bib
+output:
+  distill::distill_article:
+    self_contained: false
+categories:
+  - COVID-19
+  - Shiny App
+  - R Package
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{css, echo = FALSE}
+
+
+html, body, p {
+  
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  line-height: 1.3; 
+  font-size: 0.95em;
+  color: black;
+  font-style: normal;
+  
+}
+
+ul li{
+ font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  line-height: 1.3; 
+  font-size: 0.95em;
+  color: black;
+  font-style: normal;
+}
+
+```
+
+One of the assessments in the Communicating with Data unit in [Monash University's Master of Business Analytics](https://www.monash.edu/business/master-of-business-analytics?gclid=Cj0KCQjw59n8BRD2ARIsAAmgPmI9XoHusR-Gnw6Jw9dlIbM20Q4YfWBuCV-0pnYsUK-XQNsFcxfjNe4aAs8-EALw_wcB) program is to create an R package. After fulfilling this assignment, each student has to conduct a peer review of another student's package. In this opportunity, I would like to review a package called "covidcolsa".
+
+<h2> `r emo::ji("package")` <span style="color:#117A65"> <strong> About the Package </strong> </span> </h2>
+
+[`covidcolsa`](https://etc5523-2020.github.io/r-package-assessment-rahul-bharadwaj/) is an R package authored by [Rahul Bharadwaj Mysore Venkatesh](https://www.linkedin.com/in/rahul-bharadwaj-20?miniProfileUrn=urn%3Ali%3Afs_miniProfile%3AACoAACMpwYsB3TmlZgiQWXCnDDuOhLz1DIHrUvU&lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3B9cqDedcxRYa7gq4P9zl2Zg%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_flagship3_feed-actor_container&lici=xbaEdAsqHiWEKUV41WBmZg%3D%3D). This package's goal is to provide an easy access to COVID-19 data and statistics in Colombia and South Africa ("colsa") via an R Shiny App that comprises of the counts of tests, cases, recoveries, and deaths summarized and compared between the two regions [@covidcolsa]. Additionally, this package contains three functions, which are `launch_app()`, `country_select_input()`, and `dailyplot()`. This package is also built with 3 embedded data sets, which are the daily COVID-19 data for Colombia (`DailyCOL`) and South Africa (`DailyZAF`) and the COVID-19 data for these two countries (`covid_colsa`).  
+
+
+<h2> `r emo::ji("package")` <span style="color:#117A65"> <strong> The Review </strong> </span> </h2>
+
+Now is the time for reviewing. 
+
+```{r thanks, fig.cap = "Source: giphy.com"}
+
+knitr::include_graphics("https://media0.giphy.com/media/f4UkUlRgsAZYQE8HPV/giphy.gif?cid=ecf05e4773910851073aa292ebdb9b138ab3c3cd0548ac1c&rid=giphy.gif")
+
+```
+
+As mentioned in the previous section, this package contains three functions. Since this package aims to explore the COVID-19 data and statistics through a Shiny App, then the `launch_app()` function would be the package's primary function. As claimed, covidcolsa, through its `launch_app()` function, made the data of COVID-19 in Colombia and South Africa is easy to access. This function also could be run without any significant error. I just have to install the `reactable` package since I did not have it installed on my device. Other functions, `dailyplot()`, the function to plot the daily attributes of COVID-19, and `country_select_input()`, the function to make custom input selections in the Shiny app, also could be run without any error as long as it is fed with the correct input. The data sets also could be loaded as expected.
+
+Even so, there are some plausible improvements that I would suggest for the package that I listed as follows:
+
+- It might be a better practice to include the packages used in the Shiny app as the suggested packages in the Description file. With this information, the users will have a prior information of what packages should be installed before using the function in the package. 
+- Further, I would suggest adding assertions in the `launch_app()` function by including the `requireNamespace` function to the code.
+- Regarding the Shiny app, since the COVID-19 indicators are displayed comparison-wise, it would be better if the statistics used is the rate, e.g., the rate per a million people. The comparison based on the raw statistics (total counts) might be not apple to apple since those countries' population is different.
+- The help file for all of the functions is accessible and it allows me to get a brief overview of what the functions would do. However, there is no example on how to use the code. Hence, I would suggest to add example of functions usage in the documentation. 
+- Vignette is intended to show the user the problem that the package is designed to solve and how to solve it [@rpackage]. However, this package's vignette only shows the usage of the contained data set; in this case, it is "covid_colsa" data set. Hence, I suggest that a section of "tutorial" on using the function could be added to the vignette. It would be a kind of "relief" since the help files did not have the function usage example.
+
+Finally, by reviewing this package, I learned that documentation is a communication tool between the package developer and the users. I would say that it is as much as essential as the functions itself. Without proper documentation, the user will hardly use the functions in the package. 
+
+<h2> `r emo::ji("package")` <span style="color:#117A65"> <strong> Appendix </strong> </span> </h2>
+
+### Review Checklist
+
+This checklist is adapted from [ropensci review template](https://devguide.ropensci.org/reviewtemplate.html). The aim of this checklist is to provide the compliteness of documentation and functionality of the package. 
+
+<br>
+
+**Documentation**
+
+The package includes all the following forms of documentation:
+
+- `r emo::ji("check")` **Installation instructions** for the package is found in README.
+- `r emo::ji("x")` **Vignette(s)** demonstrating major functionality that runs successfully locally.
+- `r emo::ji("check")` **Function Documentation** for all exported functions in R help. 
+- `r emo::ji("x")` **Examples** for all exported functions in R help that run successfully locally.
+
+<br>
+
+**Functionality**
+
+- `r emo::ji("check")` **Installation:** Installation succeeds as documented.
+- `r emo::ji("check")` **Functionality:** any functional claim of the software been confirmed.
+- `r emo::ji("check")` **Automated tests:** Unit tests cover essential functions of the package and a reasonable range of inputs and conditions. All tests pass on the local machine. 
+
+## Acknowledgments {.appendix}
+
+The website and the blog post was created using  `R` `distill` package by JJ Allaire, Rich Iannone, and Yihui Xie.
+
+The emoji is write with `R` `emo` package by Hadley Wickham. 
+

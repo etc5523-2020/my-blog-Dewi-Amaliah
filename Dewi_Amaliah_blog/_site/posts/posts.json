@@ -1,5 +1,25 @@
 [
   {
+    "path": "posts/2020-10-25-covidcolsa-review/",
+    "title": "Get to Know covidcolsa",
+    "description": "This article aims to introduce and review an R package called \"covidcolsa\".",
+    "author": [
+      {
+        "name": "Dewi Lestari Amaliah",
+        "url": {}
+      }
+    ],
+    "date": "2020-10-25",
+    "categories": [
+      "COVID-19",
+      "Shiny App",
+      "R Package"
+    ],
+    "preview": {},
+    "last_modified": "2020-10-27T13:05:27+11:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2020-10-14-shinyselfreview/",
     "title": "COVID19-EUxplorer",
     "description": "A self-reflection of my first Shiny app, COVID19-EUxplorer.",
