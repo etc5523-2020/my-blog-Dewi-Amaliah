@@ -94,6 +94,8 @@ The package includes all the following forms of documentation:
 - `r emo::ji("check")` **Function Documentation** for all exported functions in R help. 
 - `r emo::ji("x")` **Examples** for all exported functions in R help that run successfully locally.
 
+Note: The vignette only demonstrated the usage of one of the data sets contained. It is contained in the package's website, but I cannot find it locally. 
+
 <br>
 
 **Functionality**
