@@ -2,30 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://datain360.com/about.html</loc>
-    <lastmod>2020-08-31T13:49:04+10:00</lastmod>
+    <lastmod>2020-08-31T10:49:04+07:00</lastmod>
   </url>
   <url>
     <loc>https://datain360.com/</loc>
-    <lastmod>2020-08-29T14:41:24+10:00</lastmod>
+    <lastmod>2022-03-02T14:41:05+07:00</lastmod>
   </url>
   <url>
     <loc>https://datain360.com/posts/2020-10-25-covidcolsa-review/</loc>
-    <lastmod>2020-10-29T09:12:09+11:00</lastmod>
+    <lastmod>2020-10-29T05:12:09+07:00</lastmod>
   </url>
   <url>
     <loc>https://datain360.com/posts/2020-10-14-shinyselfreview/</loc>
-    <lastmod>2020-10-15T14:24:46+11:00</lastmod>
+    <lastmod>2020-10-15T10:24:46+07:00</lastmod>
   </url>
   <url>
     <loc>https://datain360.com/posts/2020-09-15-covid-in-conflict/</loc>
-    <lastmod>2020-09-18T19:37:24+10:00</lastmod>
+    <lastmod>2020-09-18T16:37:24+07:00</lastmod>
   </url>
   <url>
     <loc>https://datain360.com/posts/2020-08-31-covid-19-in-indonesia/</loc>
-    <lastmod>2020-09-15T23:48:43+10:00</lastmod>
-  </url>
-  <url>
-    <loc>https://datain360.com/posts/2020-08-29-building-website-with-distill-r/</loc>
-    <lastmod>2020-08-29T15:00:59+10:00</lastmod>
+    <lastmod>2020-09-15T20:48:43+07:00</lastmod>
   </url>
 </urlset>

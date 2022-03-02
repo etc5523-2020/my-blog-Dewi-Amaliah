@@ -1,7 +1,7 @@
 ---
-title: "Telling stories with data"
+title: "Dewi Amaliah"
 description: |
-  Telling stories with data
+  Welcome to my website. I hope you enjoy it.
 site: distill::distill_website
 listing: posts
 ---
