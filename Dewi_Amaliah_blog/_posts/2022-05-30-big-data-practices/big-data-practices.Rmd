@@ -1,0 +1,45 @@
+---
+title: "Big Data Practices"
+description: |
+  Several Big Data projects carried out by National Statistic Office. 
+author:
+  - name: Dewi Lestari Amaliah
+    url: {}
+date: 05-30-2022
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(networkD3)
+```
+
+```{r}
+data <- read_csv("big-data-project-cleaned-bahasa.csv") %>%
+  rename(entity = `Country/Institution`) %>%
+  group_by(entity, indicators, data_source) %>%
+  count() %>%
+  ungroup()
+```
+
+
+```{r, fig.height=12, fig.width=12}
+# Generate Sankey Data ---------------------------------------------------------
+source <- c(data$entity, data$data_source)
+target <- c(data$data_source, data$indicators)
+values <- c(rep("1", 114))
+
+# Setup Sankey Network ----------------------------------------------------------
+nodes <- data.frame(name = unique(c(source, target)))
+links <- data.frame(source = match(source, nodes$name) - 1,
+                    target = match(target, nodes$name) - 1,
+                    value = values)
+sn <- sankeyNetwork(Links = links, Nodes = nodes, Source = "source", 
+                    Target = "target", Value = "value", NodeID = "name", 
+                    units = "projects", fontSize = 18, nodeWidth = 20)
+sn
+```
+
