@@ -1,0 +1,21 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About",
+      "description": "*Data is the new oil, and analytics is the combustion engine* - Sondergaard",
+      "author": [],
+      "contents": "\n\n\n\n\n\n\nHello! This is Dewi Amaliah, your data analyst-in-residence and the\nwoman behind this blog.\nI am a data nerd currently studying as a graduate student of Master\nof Business Analytics, Department of Econometric and Business Statistics\nat Monash University. Prior to being a student, I was working in\nStatistics Indonesia.\nI created this blog as a space for learning and sharing knowledge and\ninformation related to data analytics. It is a place where I and my\nfellow data nerds can discuss the interesting phenomenon around us\nthrough data. I mainly use R in R studio in wrangling, visualizing,\nmodeling, and analyzing the data. I also used GitHub for the\nreproducibility of my analysis.\nI would love to talk with my fellow data nerds. Let me know how we\ncan catch up by dropping me a DM in my twitter here.\nUntil then, enjoy the blog!\n\n\n\n",
+      "last_modified": "2022-07-25T14:21:49+07:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Dewi Amaliah",
+      "description": "Welcome to my website. I hope you enjoy it.\n",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-07-25T14:21:50+07:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}
