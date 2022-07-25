@@ -1,0 +1,68 @@
+Country/Institution,indicators,data_source
+Colombia,ICT indicators,mobile phone data
+Netherland,mobility statistics,traffic data
+Netherland,consumer confidence,social media
+Netherland,daytime population,mobile phone data
+Netherland,tourism statistics,mobile phone data
+Australia,crop statistics,satellite imagery
+Australia,national maps on crops and land cover ,satellite imagery
+Australia,CPI,scanner data
+Australia,household food consumption,scanner data
+Canada ,electricity consumptions,energy provider
+Canada ,event detection and sentiment indicators,news article
+Canada ,crop statistics,satellite imagery
+Canada ,trade statistics,text data
+Canada ,retail sales,scanner data
+China,demographic indicators,mobile phone data
+China,CPI,scrapped e-commerce data
+China,CPI,scanner data
+China,CPI,register data
+China,PPI,scrapped data
+China,trade statistics,UnionPay data 
+China,trade statistics,scrapped data
+China,industrial statistics,IoT data
+China,economic forecast,text data
+China,household income,register data
+China,crop statistics,satellite imagery
+UNICEF,children wellbeing indicators,news article
+UNICEF,children wellbeing indicators,satellite imagery
+UNICEF,children wellbeing indicators,social media data
+UNICEF,children wellbeing indicators,google search
+UNICEF,mobility statistics,mobile phone data
+UNICEF,emergency preparedness,satellite imagery
+UNICEF,emergency preparedness,news article
+UNICEF,emergency preparedness,mobile phone data
+Chile,gender gaps in urban mobility,mobile phone data
+Chile,gender gaps in urban mobility,OpenStreetMAp
+Estonia,mobility statistics,mobile positioning data
+United Kingdom,caravan-home address,Zoopla data
+United Kingdom,population estimates,mobile phone data
+United Kingdom,electricity consumption,energy provider
+United Kingdom,price volatilities,scrapped e-commerce data
+United Kingdom,travel flows,oystercard data
+United Kingdom,mobility statistics,geolocated tweets data
+United Kingdom,job vacancy statistics,scrapped data
+Korea,population estimates,register data
+Uganda,daily per capita expenditure,satellite imagery
+Tanzania,daily per capita expenditure,satellite imagery
+Spain,tourism statistics,Segitur database
+Finland,unemployment rate,Google Trends
+Italy,unemployment rate,Google Trends
+Italy ,CPI,scrapped data
+Sierra Leone,ebola transmission,mobile network data
+Liberia,ebola transmission,mobile network data
+Guinea,ebola transmission,mobile network data
+Japan,disaster management,mobile phone data
+Japan,disaster management,sensor
+Japan,disaster management,satellite imagery
+Indonesia,tourism statistics,mobile positioning data
+Indonesia,tourism statistics,scrapped data
+Swiss,CPI,scanner data
+United States,poverty estimates,register data
+United States ,earning gaps,register data
+United States ,government tax revenue,scrapped data
+Germany,population estimates,mobile network data
+Germany,price statistics,scanner data
+Germany,CPI,scrapped data
+Austria,price statistics,scrapped data
+New Zealand,CPI,scanner data

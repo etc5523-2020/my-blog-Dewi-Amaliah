@@ -18,7 +18,7 @@ library(networkD3)
 ```
 
 ```{r}
-data <- read_csv("big-data-project-cleaned-bahasa.csv") %>%
+data <- read_csv("big-data-project-cleaned.csv") %>%
   rename(entity = `Country/Institution`) %>%
   group_by(entity, indicators, data_source) %>%
   count() %>%
@@ -30,7 +30,7 @@ data <- read_csv("big-data-project-cleaned-bahasa.csv") %>%
 # Generate Sankey Data ---------------------------------------------------------
 source <- c(data$entity, data$data_source)
 target <- c(data$data_source, data$indicators)
-values <- c(rep("1", 114))
+values <- c(rep("1", 134))
 
 # Setup Sankey Network ----------------------------------------------------------
 nodes <- data.frame(name = unique(c(source, target)))
